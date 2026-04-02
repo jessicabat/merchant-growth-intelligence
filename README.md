@@ -15,7 +15,6 @@ Built using Shopify's published Product Success Metrics Framework.
 ```
 ├── PRD.md                      # Full project specification
 ├── data/
-│   ├── download_data.py        # Dataset download script
 │   ├── raw/                    # Olist CSVs (gitignored)
 │   └── processed/              # Cleaned merchant features (gitignored)
 ├── notebooks/
@@ -66,7 +65,7 @@ https://www.kaggle.com/datasets/olistbr/brazilian-ecommerce
 
 ## Tech Stack
 
-pandas, statsmodels (OLS regression), scikit-learn (K-means segmentation), SHAP (feature importance), Plotly (visualization), Anthropic Claude API (AI merchant briefs)
+pandas, statsmodels (OLS regression), scikit-learn (K-means segmentation), SHAP (feature importance), Plotly (visualization)
 
 ## Analytical Approach
 
