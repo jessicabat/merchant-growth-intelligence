@@ -10,4 +10,3 @@ seaborn>=0.13.0
 anthropic>=0.40.0
 jupyter>=1.0.0
 nbformat>=5.9.0
-kaggle>=1.6.0
