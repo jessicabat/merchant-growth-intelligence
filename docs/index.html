@@ -1,0 +1,1380 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Merchant Growth Intelligence</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #f8f9fa;
+      --surface: #ffffff;
+      --text: #1a1a2e;
+      --text-secondary: #6b7280;
+      --text-muted: #9ca3af;
+      --border: #e5e7eb;
+      --champions: #2ecc71;
+      --champions-light: #d1fae5;
+      --rising: #3498db;
+      --rising-light: #dbeafe;
+      --atrisk: #f39c12;
+      --atrisk-light: #fef3c7;
+      --dormant: #e74c3c;
+      --dormant-light: #fee2e2;
+      --accent: #6366f1;
+      --radius: 16px;
+      --shadow: 0 4px 24px rgba(0,0,0,0.07);
+      --shadow-hover: 0 8px 40px rgba(0,0,0,0.13);
+      --max: 900px;
+      --transition: 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Inter', system-ui, -apple-system, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      font-size: 16px;
+      line-height: 1.7;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ── Layout ── */
+    .container {
+      max-width: var(--max);
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    section {
+      padding: 80px 0;
+    }
+
+    /* ── Scroll Animations ── */
+    .fade-up {
+      opacity: 0;
+      transform: translateY(32px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+    .fade-up.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    .fade-up.delay-1 { transition-delay: 0.1s; }
+    .fade-up.delay-2 { transition-delay: 0.2s; }
+    .fade-up.delay-3 { transition-delay: 0.3s; }
+    .fade-up.delay-4 { transition-delay: 0.4s; }
+
+    /* ── Nav ── */
+    nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      background: rgba(248, 249, 250, 0.9);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      padding: 14px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .nav-brand {
+      font-weight: 700;
+      font-size: 15px;
+      color: var(--text);
+      text-decoration: none;
+      letter-spacing: -0.3px;
+    }
+    .nav-links { display: flex; gap: 24px; align-items: center; }
+    .nav-links a {
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--text-secondary);
+      text-decoration: none;
+      transition: color var(--transition);
+    }
+    .nav-links a:hover { color: var(--text); }
+    .nav-links .nav-cta {
+      background: var(--text);
+      color: white;
+      padding: 7px 16px;
+      border-radius: 8px;
+      font-size: 13px;
+    }
+    .nav-links .nav-cta:hover { background: var(--accent); color: white; }
+
+    /* ── Hero ── */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      padding-top: 80px;
+      background: linear-gradient(160deg, #ffffff 0%, #f8f9fa 60%, #eef0f8 100%);
+    }
+    .hero-inner {
+      max-width: var(--max);
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+    .hero-label {
+      display: inline-block;
+      background: var(--rising-light);
+      color: var(--rising);
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 5px 12px;
+      border-radius: 100px;
+      margin-bottom: 24px;
+    }
+    .hero h1 {
+      font-size: clamp(40px, 6vw, 72px);
+      font-weight: 800;
+      line-height: 1.08;
+      letter-spacing: -2px;
+      color: var(--text);
+      margin-bottom: 24px;
+    }
+    .hero h1 span { color: var(--rising); }
+    .hero-question {
+      font-size: clamp(18px, 2.5vw, 22px);
+      font-weight: 400;
+      color: var(--text-secondary);
+      max-width: 620px;
+      margin-bottom: 16px;
+      line-height: 1.5;
+    }
+    .hero-meta {
+      font-size: 13px;
+      color: var(--text-muted);
+      margin-bottom: 48px;
+    }
+    .hero-stats {
+      display: flex;
+      gap: 32px;
+      flex-wrap: wrap;
+    }
+    .hero-stat {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+    .hero-stat .num {
+      font-size: 32px;
+      font-weight: 700;
+      letter-spacing: -1px;
+      color: var(--text);
+    }
+    .hero-stat .label {
+      font-size: 13px;
+      color: var(--text-muted);
+      font-weight: 400;
+    }
+    .hero-divider {
+      width: 1px;
+      height: 40px;
+      background: var(--border);
+      align-self: center;
+    }
+
+    /* ── Section Headers ── */
+    .section-label {
+      display: inline-block;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 12px;
+    }
+    h2 {
+      font-size: clamp(28px, 4vw, 40px);
+      font-weight: 800;
+      letter-spacing: -1.5px;
+      line-height: 1.15;
+      margin-bottom: 16px;
+      color: var(--text);
+    }
+    .section-intro {
+      font-size: 17px;
+      color: var(--text-secondary);
+      max-width: 680px;
+      margin-bottom: 48px;
+      line-height: 1.65;
+    }
+
+    /* ── Problem Section ── */
+    .problem { background: var(--surface); }
+
+    .viz-container {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 32px;
+      margin-bottom: 40px;
+      position: relative;
+      overflow: hidden;
+    }
+    .viz-title {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text-secondary);
+      margin-bottom: 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .viz-toggle {
+      display: flex;
+      gap: 8px;
+    }
+    .viz-btn {
+      font-size: 12px;
+      font-weight: 600;
+      padding: 4px 12px;
+      border-radius: 6px;
+      border: 1px solid var(--border);
+      background: var(--surface);
+      cursor: pointer;
+      color: var(--text-secondary);
+      transition: all 0.2s;
+    }
+    .viz-btn.active {
+      background: var(--text);
+      color: white;
+      border-color: var(--text);
+    }
+
+    #dotCanvas {
+      display: block;
+      width: 100%;
+      max-width: 100%;
+    }
+
+    .viz-legend {
+      display: flex;
+      gap: 20px;
+      margin-top: 16px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+    .legend-item {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      font-size: 13px;
+      color: var(--text-secondary);
+    }
+    .legend-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+
+    .finding-box {
+      background: linear-gradient(135deg, #1a1a2e 0%, #2d2d4e 100%);
+      color: white;
+      border-radius: var(--radius);
+      padding: 32px 40px;
+      margin-top: 32px;
+    }
+    .finding-box .finding-number {
+      font-size: 72px;
+      font-weight: 800;
+      letter-spacing: -3px;
+      color: var(--dormant);
+      line-height: 1;
+      margin-bottom: 8px;
+    }
+    .finding-box p {
+      font-size: 17px;
+      color: rgba(255,255,255,0.85);
+      max-width: 540px;
+      line-height: 1.6;
+    }
+    .finding-box .caveat {
+      font-size: 13px;
+      color: rgba(255,255,255,0.45);
+      margin-top: 12px;
+    }
+
+    /* ── Predictors ── */
+    .predictors { background: var(--bg); }
+
+    .predictor-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+      margin-bottom: 40px;
+    }
+    .predictor-card {
+      background: var(--surface);
+      border: 2px solid var(--border);
+      border-radius: var(--radius);
+      padding: 28px;
+      position: relative;
+      transition: all var(--transition);
+    }
+    .predictor-card.significant {
+      border-color: var(--champions);
+      background: linear-gradient(135deg, #fff 0%, #f0fdf4 100%);
+    }
+    .predictor-card.not-significant {
+      opacity: 0.65;
+    }
+    .predictor-card .badge {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      font-size: 11px;
+      font-weight: 700;
+      padding: 3px 10px;
+      border-radius: 100px;
+    }
+    .significant .badge {
+      background: var(--champions-light);
+      color: #15803d;
+    }
+    .not-significant .badge {
+      background: var(--border);
+      color: var(--text-muted);
+    }
+    .predictor-card h3 {
+      font-size: 16px;
+      font-weight: 600;
+      margin-bottom: 12px;
+      color: var(--text);
+    }
+    .predictor-card .p-value {
+      font-size: 36px;
+      font-weight: 800;
+      letter-spacing: -1.5px;
+      margin-bottom: 8px;
+    }
+    .significant .p-value { color: var(--champions); }
+    .not-significant .p-value { color: var(--text-muted); }
+    .predictor-card .p-label {
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      margin-bottom: 16px;
+    }
+    .predictor-card .means {
+      font-size: 13px;
+      color: var(--text-secondary);
+      line-height: 1.7;
+    }
+    .predictor-card .means strong {
+      color: var(--text);
+      font-weight: 600;
+    }
+
+    .insight-prose {
+      background: var(--surface);
+      border-radius: var(--radius);
+      padding: 28px 32px;
+      border-left: 4px solid var(--rising);
+    }
+    .insight-prose p {
+      font-size: 16px;
+      color: var(--text-secondary);
+      line-height: 1.7;
+    }
+    .insight-prose p + p { margin-top: 12px; }
+    .insight-prose strong { color: var(--text); }
+
+    /* ── Segments ── */
+    .segments { background: var(--surface); }
+
+    .segments-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+    }
+    .segment-card {
+      border-radius: var(--radius);
+      padding: 28px;
+      border: 1px solid var(--border);
+      background: var(--surface);
+      cursor: default;
+      transition: all var(--transition);
+      position: relative;
+      overflow: hidden;
+    }
+    .segment-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+    }
+    .segment-card.champions::before { background: var(--champions); }
+    .segment-card.rising::before { background: var(--rising); }
+    .segment-card.atrisk::before { background: var(--atrisk); }
+    .segment-card.dormant::before { background: var(--dormant); }
+
+    .segment-card:hover {
+      box-shadow: var(--shadow-hover);
+      transform: translateY(-2px);
+    }
+
+    .segment-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 16px;
+    }
+    .segment-name {
+      font-size: 18px;
+      font-weight: 700;
+      letter-spacing: -0.5px;
+    }
+    .segment-card.champions .segment-name { color: var(--champions); }
+    .segment-card.rising .segment-name { color: var(--rising); }
+    .segment-card.atrisk .segment-name { color: var(--atrisk); }
+    .segment-card.dormant .segment-name { color: var(--dormant); }
+
+    .segment-icon {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+    }
+    .champions .segment-icon { background: var(--champions-light); }
+    .rising .segment-icon { background: var(--rising-light); }
+    .atrisk .segment-icon { background: var(--atrisk-light); }
+    .dormant .segment-icon { background: var(--dormant-light); }
+
+    .segment-metrics {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin: 16px 0;
+    }
+    .seg-metric {
+      background: var(--bg);
+      border-radius: 10px;
+      padding: 12px;
+    }
+    .seg-metric .val {
+      font-size: 20px;
+      font-weight: 700;
+      letter-spacing: -0.8px;
+      color: var(--text);
+      margin-bottom: 2px;
+    }
+    .seg-metric .lbl {
+      font-size: 11px;
+      color: var(--text-muted);
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+
+    .segment-recommendation {
+      margin-top: 16px;
+      padding-top: 16px;
+      border-top: 1px solid var(--border);
+    }
+    .recommendation-label {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 8px;
+    }
+    .recommendation-text {
+      font-size: 14px;
+      color: var(--text-secondary);
+      line-height: 1.6;
+    }
+
+    /* ── Funnel ── */
+    .funnel-section { background: var(--bg); }
+
+    .funnel-wrap {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 40px 32px;
+      margin-bottom: 32px;
+    }
+
+    .funnel-svg-container {
+      width: 100%;
+      overflow-x: auto;
+    }
+
+    .funnel-caption {
+      font-size: 15px;
+      color: var(--text-secondary);
+      line-height: 1.7;
+      max-width: 680px;
+    }
+    .funnel-caption p + p { margin-top: 12px; }
+    .funnel-caption strong { color: var(--text); }
+
+    /* ── Recommendation ── */
+    .recommendation-section { background: var(--surface); }
+
+    .rec-card {
+      background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
+      border: 1px solid #bae6fd;
+      border-radius: var(--radius);
+      padding: 36px;
+      margin-bottom: 24px;
+    }
+    .rec-card h3 {
+      font-size: 22px;
+      font-weight: 700;
+      letter-spacing: -0.5px;
+      color: var(--text);
+      margin-bottom: 16px;
+    }
+    .rec-card p {
+      font-size: 16px;
+      color: var(--text-secondary);
+      line-height: 1.7;
+    }
+    .rec-card p + p { margin-top: 12px; }
+    .rec-card strong { color: var(--text); }
+
+    .alert-example {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 20px 24px;
+      margin-top: 20px;
+      font-family: 'Inter', monospace;
+    }
+    .alert-example-label {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 10px;
+    }
+    .alert-example-text {
+      font-size: 14px;
+      color: var(--text);
+      line-height: 1.6;
+      font-style: italic;
+    }
+    .alert-example-text span { color: var(--rising); font-weight: 600; font-style: normal; }
+
+    .rec-priorities {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+    .priority-item {
+      display: flex;
+      gap: 16px;
+      align-items: flex-start;
+      background: var(--bg);
+      border-radius: 12px;
+      padding: 20px;
+    }
+    .priority-num {
+      width: 32px;
+      height: 32px;
+      background: var(--text);
+      color: white;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+      font-weight: 700;
+      flex-shrink: 0;
+    }
+    .priority-content h4 {
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--text);
+      margin-bottom: 4px;
+    }
+    .priority-content p {
+      font-size: 14px;
+      color: var(--text-secondary);
+      line-height: 1.6;
+    }
+
+    /* ── Experiment ── */
+    .experiment { background: var(--bg); }
+
+    .experiment-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 14px;
+      background: var(--surface);
+      border-radius: var(--radius);
+      overflow: hidden;
+      box-shadow: var(--shadow);
+      margin-bottom: 24px;
+    }
+    .experiment-table th {
+      background: var(--text);
+      color: white;
+      font-size: 12px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      padding: 14px 20px;
+      text-align: left;
+    }
+    .experiment-table td {
+      padding: 14px 20px;
+      border-bottom: 1px solid var(--border);
+      color: var(--text-secondary);
+    }
+    .experiment-table tr:last-child td { border-bottom: none; }
+    .experiment-table td:first-child { font-weight: 500; color: var(--text); }
+    .experiment-table .highlight-row td { background: #fef9c3; }
+    .experiment-table .warning td:last-child { color: var(--dormant); font-weight: 600; }
+    .experiment-table .success td:last-child { color: var(--champions); font-weight: 600; }
+
+    .guardrail-finding {
+      background: var(--surface);
+      border-radius: var(--radius);
+      padding: 28px 32px;
+      border-left: 4px solid var(--atrisk);
+    }
+    .guardrail-finding h3 {
+      font-size: 17px;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 10px;
+    }
+    .guardrail-finding p {
+      font-size: 15px;
+      color: var(--text-secondary);
+      line-height: 1.7;
+    }
+    .guardrail-finding p + p { margin-top: 10px; }
+    .guardrail-finding strong { color: var(--text); }
+
+    /* ── Footer ── */
+    footer {
+      background: var(--text);
+      color: rgba(255,255,255,0.7);
+      padding: 48px 0;
+    }
+    .footer-inner {
+      max-width: var(--max);
+      margin: 0 auto;
+      padding: 0 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+    .footer-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 24px;
+      flex-wrap: wrap;
+    }
+    .footer-brand {
+      font-size: 18px;
+      font-weight: 700;
+      color: white;
+      letter-spacing: -0.5px;
+    }
+    .footer-tagline {
+      font-size: 13px;
+      color: rgba(255,255,255,0.45);
+      margin-top: 4px;
+    }
+    .footer-links { display: flex; gap: 20px; align-items: center; }
+    .footer-links a {
+      font-size: 14px;
+      color: rgba(255,255,255,0.6);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .footer-links a:hover { color: white; }
+    .footer-links .footer-cta {
+      background: white;
+      color: var(--text);
+      padding: 8px 18px;
+      border-radius: 8px;
+      font-weight: 600;
+      font-size: 13px;
+    }
+    .footer-bottom {
+      border-top: 1px solid rgba(255,255,255,0.1);
+      padding-top: 20px;
+      font-size: 12px;
+      color: rgba(255,255,255,0.3);
+    }
+
+    /* ── Responsive ── */
+    @media (max-width: 640px) {
+      section { padding: 56px 0; }
+      .segments-grid { grid-template-columns: 1fr; }
+      .predictor-grid { grid-template-columns: 1fr; }
+      .hero-stats { flex-direction: column; gap: 16px; }
+      .hero-divider { display: none; }
+      nav .nav-links { gap: 12px; }
+      nav .nav-links a:not(.nav-cta) { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <a href="index.html" class="nav-brand">Merchant Growth Intelligence</a>
+    <div class="nav-links">
+      <a href="#segments">Segments</a>
+      <a href="#recommendation">Recommendation</a>
+      <a href="technical.html" class="nav-cta">Technical Deep Dive</a>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-inner">
+      <div class="hero-label">Product Data Science Case Study</div>
+      <h1>Merchant<br><span>Growth</span><br>Intelligence</h1>
+      <p class="hero-question">Which merchants are silently failing, and what should the platform build to save them?</p>
+      <p class="hero-meta">Olist Brazilian E-Commerce dataset &nbsp;|&nbsp; ~100,000 orders &nbsp;|&nbsp; ~3,000 sellers &nbsp;|&nbsp; 2016 to 2018</p>
+      <div class="hero-stats">
+        <div class="hero-stat">
+          <span class="num" data-count="3" data-suffix="k">3k</span>
+          <span class="label">Sellers analyzed</span>
+        </div>
+        <div class="hero-divider"></div>
+        <div class="hero-stat">
+          <span class="num" data-count="24" data-suffix=".2%">24.2%</span>
+          <span class="label">Silently failing</span>
+        </div>
+        <div class="hero-divider"></div>
+        <div class="hero-stat">
+          <span class="num" data-count="81" data-suffix="%">81%</span>
+          <span class="label">GMV from Champions</span>
+        </div>
+        <div class="hero-divider"></div>
+        <div class="hero-stat">
+          <span class="num" data-count="4" data-suffix=" segments">4 segments</span>
+          <span class="label">Actionable tiers</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- THE PROBLEM -->
+  <section class="problem" id="problem">
+    <div class="container">
+      <p class="section-label fade-up">The Problem</p>
+      <h2 class="fade-up">Most merchants look fine on the surface.</h2>
+      <p class="section-intro fade-up">The intuitive way to measure merchant health is to look at review scores. When most merchants cluster near 4 to 5 stars, the platform appears healthy. But the data suggests this picture misses a significant portion of the problem.</p>
+
+      <div class="viz-container fade-up">
+        <div class="viz-title">
+          <span>Merchants with average review score above 4.0</span>
+          <div class="viz-toggle">
+            <button class="viz-btn active" id="btn-naive" onclick="showNaive()">Naive view</button>
+            <button class="viz-btn" id="btn-real" onclick="showReal()">Reality</button>
+          </div>
+        </div>
+        <canvas id="dotCanvas" height="200"></canvas>
+        <div class="viz-legend" id="viz-legend-naive">
+          <div class="legend-item"><div class="legend-dot" style="background:#3498db"></div><span>High-rated merchants (review score 4.0+)</span></div>
+        </div>
+        <div class="viz-legend" id="viz-legend-real" style="display:none">
+          <div class="legend-item"><div class="legend-dot" style="background:#3498db"></div><span>Growing or stable (75.8%)</span></div>
+          <div class="legend-item"><div class="legend-dot" style="background:#e74c3c"></div><span>Declining order volume (24.2%)</span></div>
+        </div>
+      </div>
+
+      <div class="finding-box fade-up">
+        <div class="finding-number" id="finding-counter">24.2%</div>
+        <p>of merchants with review scores above 4.0 have <strong style="color:white">declining order volume</strong>. Their reviews look fine. Their businesses are quietly shrinking.</p>
+        <p class="caveat">Based on 641 merchants with enough order history to compute a trajectory (first half vs. second half of the dataset). One limitation: this uses order volume, not true churn, since the dataset does not record account deactivations.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- WHAT PREDICTS DECLINE -->
+  <section class="predictors" id="predictors">
+    <div class="container">
+      <p class="section-label fade-up">What Actually Predicts Decline</p>
+      <h2 class="fade-up">Delivery reliability matters.<br>Review scores lag behind.</h2>
+      <p class="section-intro fade-up">To see whether this is worth acting on, I ran a simple statistical test: which early signals best predict whether a merchant ends up declining? The answer reframed the whole analysis.</p>
+
+      <div class="predictor-grid fade-up">
+        <div class="predictor-card significant">
+          <div class="badge">Significant predictor</div>
+          <h3>Early-period late delivery rate</h3>
+          <div class="p-value">p = 0.028</div>
+          <div class="p-label">Two-sample t-test, declining vs. growing</div>
+          <div class="means">
+            Declining merchants: <strong>6.0% late rate</strong><br>
+            Growing merchants: <strong>3.9% late rate</strong><br>
+            Point-biserial r = 0.071
+          </div>
+        </div>
+        <div class="predictor-card not-significant">
+          <div class="badge">Not significant</div>
+          <h3>Early-period average review score</h3>
+          <div class="p-value">p = 0.267</div>
+          <div class="p-label">Two-sample t-test, declining vs. growing</div>
+          <div class="means">
+            Declining merchants: <strong>4.22 avg score</strong><br>
+            Growing merchants: <strong>4.28 avg score</strong><br>
+            Difference is not detectable
+          </div>
+        </div>
+      </div>
+
+      <div class="insight-prose fade-up">
+        <p>The data suggests that delivery reliability is a leading indicator of merchant decline, while review scores are a lagging one. By the time a merchant's review score drops noticeably, the underlying fulfillment problems have usually been building for a while.</p>
+        <p>The regression analysis (Part 4) reinforces this: each 10 percentage point increase in late delivery rate costs <strong>0.138 review points</strong> (p less than 0.001, 95% CI: -0.173 to -0.103), roughly 4x the per-unit effect of raw shipping speed. Buyers care about whether the delivery promise was kept, not just how long it took. The freight-to-price ratio is a secondary lever: each unit increase in avg_freight_ratio costs an additional <strong>0.122 review points</strong> (p = 0.003, 95% CI: -0.203 to -0.041), which points to pricing tooling as a second area worth investigating after fulfillment.</p>
+        <p>I'd want to verify this pattern on a larger dataset before making strong product decisions around it. The Olist dataset covers two years of one marketplace. The directional finding seems solid, but the specific numbers would need validation on Shopify's own data.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOUR SEGMENTS -->
+  <section class="segments" id="segments">
+    <div class="container">
+      <p class="section-label fade-up">Merchant Segmentation</p>
+      <h2 class="fade-up">Four segments. Four different interventions.</h2>
+      <p class="section-intro fade-up">Using RFM (recency, frequency, monetary) features and K-means clustering (k=4, validated with silhouette analysis), the ~3,000 sellers fall into four actionable tiers. Hover over each card to see the product recommendation.</p>
+
+      <div class="segments-grid">
+
+        <!-- Champions -->
+        <div class="segment-card champions fade-up delay-1">
+          <div class="segment-header">
+            <span class="segment-name">Champions</span>
+            <div class="segment-icon">&#127942;</div>
+          </div>
+          <div class="segment-metrics">
+            <div class="seg-metric">
+              <div class="val">645</div>
+              <div class="lbl">Merchants</div>
+            </div>
+            <div class="seg-metric">
+              <div class="val">80.9%</div>
+              <div class="lbl">of GMV</div>
+            </div>
+            <div class="seg-metric">
+              <div class="val">6.9%</div>
+              <div class="lbl">Late rate</div>
+            </div>
+            <div class="seg-metric">
+              <div class="val">65</div>
+              <div class="lbl">Median orders</div>
+            </div>
+          </div>
+          <div class="segment-recommendation">
+            <div class="recommendation-label">Product recommendation</div>
+            <div class="recommendation-text">Champions drive 81% of GMV and have the highest late rate of any active segment (6.9%). A fulfillment performance dashboard showing their late rate trend over time, benchmarked against their category median, could help them spot problems before reviews drop. Losing even a few Champions has outsized GMV impact.</div>
+          </div>
+        </div>
+
+        <!-- Rising Stars -->
+        <div class="segment-card rising fade-up delay-2">
+          <div class="segment-header">
+            <span class="segment-name">Rising Stars</span>
+            <div class="segment-icon">&#11088;</div>
+          </div>
+          <div class="segment-metrics">
+            <div class="seg-metric">
+              <div class="val">999</div>
+              <div class="lbl">Merchants</div>
+            </div>
+            <div class="seg-metric">
+              <div class="val">15%</div>
+              <div class="lbl">of GMV</div>
+            </div>
+            <div class="seg-metric">
+              <div class="val">29.3%</div>
+              <div class="lbl">Declining</div>
+            </div>
+            <div class="seg-metric">
+              <div class="val">10</div>
+              <div class="lbl">Median orders</div>
+            </div>
+          </div>
+          <div class="segment-recommendation">
+            <div class="recommendation-label">Product recommendation</div>
+            <div class="recommendation-text">Nearly 1 in 3 Rising Stars is stalling despite healthy reviews (4.29 median). A weekly notification showing order volume trend vs. similar merchants in their category, paired with one specific suggestion. This is the highest-leverage intervention in the funnel.</div>
+          </div>
+        </div>
+
+        <!-- At Risk -->
+        <div class="segment-card atrisk fade-up delay-3">
+          <div class="segment-header">
+            <span class="segment-name">At Risk</span>
+            <div class="segment-icon">&#9888;&#65039;</div>
+          </div>
+          <div class="segment-metrics">
+            <div class="seg-metric">
+              <div class="val">748</div>
+              <div class="lbl">Merchants</div>
+            </div>
+            <div class="seg-metric">
+              <div class="val">1.2%</div>
+              <div class="lbl">of GMV</div>
+            </div>
+            <div class="seg-metric">
+              <div class="val">4.67</div>
+              <div class="lbl">Avg review</div>
+            </div>
+            <div class="seg-metric">
+              <div class="val">2</div>
+              <div class="lbl">Median orders</div>
+            </div>
+          </div>
+          <div class="segment-recommendation">
+            <div class="recommendation-label">Product recommendation</div>
+            <div class="recommendation-text">At Risk merchants have the highest review scores (4.67) but only 2 median orders. Buyers are happy when they do purchase. The barrier is discoverability, not quality. The platform could test a 'first 30 days' program: boosted visibility in search results or category pages for new merchants until they hit a threshold.</div>
+          </div>
+        </div>
+
+        <!-- Dormant -->
+        <div class="segment-card dormant fade-up delay-4">
+          <div class="segment-header">
+            <span class="segment-name">Dormant</span>
+            <div class="segment-icon">&#128564;</div>
+          </div>
+          <div class="segment-metrics">
+            <div class="seg-metric">
+              <div class="val">568</div>
+              <div class="lbl">Merchants</div>
+            </div>
+            <div class="seg-metric">
+              <div class="val">406</div>
+              <div class="lbl">Days inactive</div>
+            </div>
+            <div class="seg-metric">
+              <div class="val">52.8%</div>
+              <div class="lbl">Were declining</div>
+            </div>
+            <div class="seg-metric">
+              <div class="val">100%</div>
+              <div class="lbl">Churned</div>
+            </div>
+          </div>
+          <div class="segment-recommendation">
+            <div class="recommendation-label">Product recommendation</div>
+            <div class="recommendation-text">Over half of Dormant merchants were already on a declining trajectory before going inactive. Reactivation campaigns are low-yield. The more valuable use of this segment is as a diagnostic signal: their early patterns can inform when to trigger alerts for current At Risk and Rising Star merchants.</div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- LIFECYCLE FUNNEL -->
+  <section class="funnel-section" id="funnel">
+    <div class="container">
+      <p class="section-label fade-up">The Merchant Lifecycle</p>
+      <h2 class="fade-up">A leaky funnel.</h2>
+      <p class="section-intro fade-up">These four segments are not independent categories. They describe stages in a merchant lifecycle, one that has clear leakage points the platform can address.</p>
+
+      <div class="funnel-wrap fade-up">
+        <div class="funnel-svg-container">
+          <svg viewBox="0 0 820 320" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:820px;display:block;margin:0 auto;" aria-label="Merchant lifecycle funnel diagram">
+
+            <!-- Background track -->
+            <rect x="10" y="120" width="800" height="80" rx="40" fill="#f3f4f6"/>
+
+            <!-- Stage: At Risk -->
+            <rect x="10" y="100" width="170" height="120" rx="14" fill="#fff7ed" stroke="#f39c12" stroke-width="2"/>
+            <text x="95" y="133" text-anchor="middle" font-family="Inter,sans-serif" font-size="13" font-weight="700" fill="#92400e">At Risk</text>
+            <text x="95" y="153" text-anchor="middle" font-family="Inter,sans-serif" font-size="22" font-weight="800" fill="#f39c12">748</text>
+            <text x="95" y="172" text-anchor="middle" font-family="Inter,sans-serif" font-size="11" fill="#b45309">merchants</text>
+            <text x="95" y="190" text-anchor="middle" font-family="Inter,sans-serif" font-size="11" fill="#b45309">2 median orders</text>
+            <text x="95" y="208" text-anchor="middle" font-family="Inter,sans-serif" font-size="11" fill="#b45309">4.67 avg review</text>
+
+            <!-- Arrow At Risk -> Rising Stars -->
+            <path d="M 185 160 L 290 160" stroke="#d1d5db" stroke-width="2" marker-end="url(#arrow)"/>
+            <text x="238" y="150" text-anchor="middle" font-family="Inter,sans-serif" font-size="10" fill="#9ca3af">grow</text>
+
+            <!-- Stage: Rising Stars -->
+            <rect x="295" y="100" width="175" height="120" rx="14" fill="#eff6ff" stroke="#3498db" stroke-width="2"/>
+            <text x="382" y="133" text-anchor="middle" font-family="Inter,sans-serif" font-size="13" font-weight="700" fill="#1e40af">Rising Stars</text>
+            <text x="382" y="153" text-anchor="middle" font-family="Inter,sans-serif" font-size="22" font-weight="800" fill="#3498db">999</text>
+            <text x="382" y="172" text-anchor="middle" font-family="Inter,sans-serif" font-size="11" fill="#1e40af">merchants</text>
+            <text x="382" y="190" text-anchor="middle" font-family="Inter,sans-serif" font-size="11" fill="#1e40af">10 median orders</text>
+            <text x="382" y="208" text-anchor="middle" font-family="Inter,sans-serif" font-size="11" fill="#1e40af">29.3% declining</text>
+
+            <!-- Arrow Rising Stars -> Champions -->
+            <path d="M 475 160 L 575 160" stroke="#d1d5db" stroke-width="2" marker-end="url(#arrow)"/>
+            <text x="524" y="150" text-anchor="middle" font-family="Inter,sans-serif" font-size="10" fill="#9ca3af">scale</text>
+
+            <!-- Stage: Champions -->
+            <rect x="580" y="100" width="180" height="120" rx="14" fill="#f0fdf4" stroke="#2ecc71" stroke-width="2"/>
+            <text x="670" y="133" text-anchor="middle" font-family="Inter,sans-serif" font-size="13" font-weight="700" fill="#166534">Champions</text>
+            <text x="670" y="153" text-anchor="middle" font-family="Inter,sans-serif" font-size="22" font-weight="800" fill="#2ecc71">645</text>
+            <text x="670" y="172" text-anchor="middle" font-family="Inter,sans-serif" font-size="11" fill="#166534">merchants</text>
+            <text x="670" y="190" text-anchor="middle" font-family="Inter,sans-serif" font-size="11" fill="#166534">65 median orders</text>
+            <text x="670" y="208" text-anchor="middle" font-family="Inter,sans-serif" font-size="11" fill="#166534">80.9% of GMV</text>
+
+            <!-- Dormant leak from Rising Stars -->
+            <path d="M 382 220 L 382 270" stroke="#e74c3c" stroke-width="1.5" stroke-dasharray="4,3" marker-end="url(#arrow-red)"/>
+
+            <!-- Dormant box -->
+            <rect x="275" y="268" width="215" height="48" rx="10" fill="#fef2f2" stroke="#e74c3c" stroke-width="1.5"/>
+            <text x="382" y="289" text-anchor="middle" font-family="Inter,sans-serif" font-size="12" font-weight="700" fill="#991b1b">Dormant: 568 merchants</text>
+            <text x="382" y="306" text-anchor="middle" font-family="Inter,sans-serif" font-size="11" fill="#dc2626">52.8% were previously declining</text>
+
+            <!-- Leak label -->
+            <text x="410" y="252" text-anchor="start" font-family="Inter,sans-serif" font-size="10" fill="#e74c3c" font-weight="600">29.3% of Rising Stars stalling</text>
+
+            <!-- Arrow markers -->
+            <defs>
+              <marker id="arrow" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+                <path d="M0,0 L0,6 L8,3 z" fill="#d1d5db"/>
+              </marker>
+              <marker id="arrow-red" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+                <path d="M0,0 L0,6 L8,3 z" fill="#e74c3c"/>
+              </marker>
+            </defs>
+          </svg>
+        </div>
+      </div>
+
+      <div class="funnel-caption fade-up">
+        <p>At Risk merchants join the platform but rarely reach traction (2 median orders). The ones who break through become Rising Stars, but 29.3% of those are stalling. The Rising Stars who sustain growth become Champions, the 22% of sellers driving 81% of GMV. Dormant merchants show what happens when the platform misses the signals at each earlier stage: more than half were already on a declining trajectory before they went inactive.</p>
+        <p>The interventions map to stages of this funnel. Onboarding programs for At Risk, proactive alerts for Rising Stars, scale-aware fulfillment tools for Champions. Each is a different problem requiring a different solution.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- RECOMMENDATION -->
+  <section class="recommendation-section" id="recommendation">
+    <div class="container">
+      <p class="section-label fade-up">Recommendation</p>
+      <h2 class="fade-up">Build proactive<br>merchant health alerts.</h2>
+      <p class="section-intro fade-up">The decision memo synthesizes the analysis into a single recommendation. Start with Rising Stars, where the data shows the clearest combination of urgency and opportunity.</p>
+
+      <div class="rec-card fade-up">
+        <h3>What to build</h3>
+        <p>A weekly notification showing each merchant's on-time delivery rate trend over the last 30 days, benchmarked against the category median. When a merchant's rate drops below the category median, the alert escalates with a specific, actionable suggestion.</p>
+
+        <div class="alert-example">
+          <div class="alert-example-label">Example alert</div>
+          <div class="alert-example-text">
+            "Your on-time rate dropped to <span>82%</span> this month. Merchants in <span>health_beauty</span> with rates above <span>90%</span> fulfill 2 days faster on average. Consider adjusting your estimated delivery windows."
+          </div>
+        </div>
+      </div>
+
+      <div class="rec-priorities fade-up">
+        <div class="priority-item">
+          <div class="priority-num">1</div>
+          <div class="priority-content">
+            <h4>Start with Rising Stars</h4>
+            <p>29.3% are declining, but they are still active (28-day median recency) and their fundamentals are solid (4.29 reviews, 5.0% late rate). They are at the inflection point between growth and decline, which is where there is still time to intervene.</p>
+          </div>
+        </div>
+        <div class="priority-item">
+          <div class="priority-num">2</div>
+          <div class="priority-content">
+            <h4>Extend to Champions over time</h4>
+            <p>Champions have the highest late rate of any active segment (6.9%), because fulfillment strain increases with volume. The same alert infrastructure can extend to Champions with tuned thresholds appropriate for their scale.</p>
+          </div>
+        </div>
+        <div class="priority-item">
+          <div class="priority-num">3</div>
+          <div class="priority-content">
+            <h4>Use Dormant patterns as training signal</h4>
+            <p>52.8% of Dormant merchants were already declining before going inactive. Their early trajectories can inform the pattern-matching for when to trigger alerts for current merchants, without needing to build new data collection.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- EXPERIMENT DESIGN -->
+  <section class="experiment" id="experiment">
+    <div class="container">
+      <p class="section-label fade-up">Experiment Design</p>
+      <h2 class="fade-up">How to test it.</h2>
+      <p class="section-intro fade-up">Before shipping the feature, I designed a randomized experiment using variance from the actual Olist data. The power analysis surfaced something important about how the guardrail metric should be measured.</p>
+
+      <table class="experiment-table fade-up">
+        <thead>
+          <tr>
+            <th>Parameter</th>
+            <th>Value</th>
+            <th>Notes</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Primary metric</td>
+            <td>On-time delivery rate</td>
+            <td>Measured at seller level</td>
+          </tr>
+          <tr>
+            <td>Randomization unit</td>
+            <td>Seller-level</td>
+            <td>Avoids contamination within a single merchant</td>
+          </tr>
+          <tr>
+            <td>MDE</td>
+            <td>5 percentage points</td>
+            <td>Grounded in observed gap between declining and growing merchants</td>
+          </tr>
+          <tr class="success">
+            <td>Required N per group</td>
+            <td>34 merchants (68 total)</td>
+            <td>5.5% of the 1,226 eligible sellers. Not sample-limited.</td>
+          </tr>
+          <tr>
+            <td>Eligible pool</td>
+            <td>1,226 merchants</td>
+            <td>Sellers with 10+ orders in the dataset</td>
+          </tr>
+          <tr>
+            <td>Runtime</td>
+            <td>6 weeks</td>
+            <td>4-week observation + 2-week buffer. Observation-limited, not sample-limited.</td>
+          </tr>
+          <tr class="warning">
+            <td>GMV guardrail (merchant level)</td>
+            <td>6.4% power at N=34</td>
+            <td>Effectively random. Would need 2,101 per group to detect 10% decrease.</td>
+          </tr>
+          <tr class="success">
+            <td>GMV guardrail (order level)</td>
+            <td>99.9% power</td>
+            <td>~3,812 orders/month from eligible sellers. Resolves in under 4 weeks.</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="guardrail-finding fade-up">
+        <h3>The guardrail problem</h3>
+        <p>This was the finding I want to highlight most from the experiment design. At the planned sample size of 34 merchants per group, the GMV guardrail has only <strong>6.4% statistical power</strong>. That means if the alerts were secretly harming merchants' revenue by 10%, we would fail to detect it 93.6% of the time. The guardrail would be decorative.</p>
+        <p>The fix is to measure GMV at the order level rather than the merchant level. Individual order values have lower variance than merchant-level aggregates, and there are many more of them. The eligible sellers generate roughly 3,812 orders per month, which gets us to the required 1,233 orders per group in under 4 weeks. Same observation window, dramatically more power (99.9%).</p>
+        <p>I initially expected all metrics to use the same unit of analysis. Running the power calculation showed me why that assumption breaks down when metric variance differs dramatically across levels. This is something I'd want to discuss with more experienced team members before finalizing the design.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-inner">
+      <div class="footer-top">
+        <div>
+          <div class="footer-brand">Merchant Growth Intelligence</div>
+          <div class="footer-tagline">A product data science portfolio project by Jessica Batbayar</div>
+        </div>
+        <div class="footer-links">
+          <a href="technical.html">Technical Deep Dive</a>
+          <a href="https://github.com/jessicabat/merchant-growth-intelligence" class="footer-cta">GitHub Repo</a>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        Data: Olist Brazilian E-Commerce (Kaggle, CC BY-NC-SA 4.0). Framework adapted from Shopify's published engineering blog posts on product success measurement. Analysis run April 2026.
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // ── Scroll animations ──────────────────────────────────────
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.classList.add('visible');
+          observer.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.12 });
+
+    document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+
+    // ── Dot matrix visualization ──────────────────────────────
+    const canvas = document.getElementById('dotCanvas');
+    const ctx = canvas.getContext('2d');
+
+    const TOTAL = 100;
+    const DECLINING = 24;
+    const COLS = 20;
+    const ROWS = 5;
+    const DOT_R = 8;
+    const GAP = 12;
+
+    let dots = [];
+    let phase = 'naive'; // 'naive' | 'real'
+    let animFrame = null;
+
+    function initCanvas() {
+      const dpr = window.devicePixelRatio || 1;
+      const w = canvas.parentElement.clientWidth - 64;
+      const h = ROWS * (DOT_R * 2 + GAP) + GAP + 20;
+      canvas.width = w * dpr;
+      canvas.height = h * dpr;
+      canvas.style.width = w + 'px';
+      canvas.style.height = h + 'px';
+      ctx.scale(dpr, dpr);
+
+      const dotW = w;
+      const spacingX = dotW / COLS;
+      const spacingY = (h - 20) / ROWS;
+      const offsetX = spacingX / 2;
+      const offsetY = spacingY / 2 + 10;
+
+      dots = [];
+      for (let i = 0; i < TOTAL; i++) {
+        const col = i % COLS;
+        const row = Math.floor(i / COLS);
+        dots.push({
+          x: offsetX + col * spacingX,
+          y: offsetY + row * spacingY,
+          isDecline: i < DECLINING,
+          color: '#3498db',
+          targetColor: i < DECLINING ? '#e74c3c' : '#3498db',
+          progress: 0,
+        });
+      }
+      // Shuffle so declining dots are scattered
+      for (let i = dots.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [dots[i], dots[j]] = [dots[j], dots[i]];
+      }
+    }
+
+    function hexToRgb(hex) {
+      const r = parseInt(hex.slice(1,3),16);
+      const g = parseInt(hex.slice(3,5),16);
+      const b = parseInt(hex.slice(5,7),16);
+      return [r,g,b];
+    }
+
+    function lerpColor(c1, c2, t) {
+      const [r1,g1,b1] = hexToRgb(c1);
+      const [r2,g2,b2] = hexToRgb(c2);
+      const r = Math.round(r1 + (r2-r1)*t);
+      const g = Math.round(g1 + (g2-g1)*t);
+      const b = Math.round(b1 + (b2-b1)*t);
+      return `rgb(${r},${g},${b})`;
+    }
+
+    function drawDots() {
+      const w = canvas.width / (window.devicePixelRatio || 1);
+      const h = canvas.height / (window.devicePixelRatio || 1);
+      ctx.clearRect(0, 0, w, h);
+      dots.forEach(d => {
+        ctx.beginPath();
+        ctx.arc(d.x, d.y, DOT_R, 0, Math.PI * 2);
+        ctx.fillStyle = d.color;
+        ctx.fill();
+      });
+    }
+
+    function animateToReal() {
+      let startTime = null;
+      const duration = 900;
+
+      function step(ts) {
+        if (!startTime) startTime = ts;
+        const elapsed = ts - startTime;
+        const progress = Math.min(elapsed / duration, 1);
+        const eased = 1 - Math.pow(1 - progress, 3);
+
+        dots.forEach(d => {
+          if (d.isDecline) {
+            d.color = lerpColor('#3498db', d.targetColor, eased);
+          }
+        });
+        drawDots();
+        if (progress < 1) animFrame = requestAnimationFrame(step);
+      }
+      animFrame = requestAnimationFrame(step);
+    }
+
+    function animateToNaive() {
+      let startTime = null;
+      const duration = 600;
+      function step(ts) {
+        if (!startTime) startTime = ts;
+        const elapsed = ts - startTime;
+        const progress = Math.min(elapsed / duration, 1);
+        const eased = 1 - Math.pow(1 - progress, 3);
+        dots.forEach(d => {
+          if (d.isDecline) {
+            d.color = lerpColor(d.targetColor, '#3498db', eased);
+          }
+        });
+        drawDots();
+        if (progress < 1) animFrame = requestAnimationFrame(step);
+      }
+      animFrame = requestAnimationFrame(step);
+    }
+
+    function showNaive() {
+      if (phase === 'naive') return;
+      phase = 'naive';
+      if (animFrame) cancelAnimationFrame(animFrame);
+      document.getElementById('btn-naive').classList.add('active');
+      document.getElementById('btn-real').classList.remove('active');
+      document.getElementById('viz-legend-naive').style.display = '';
+      document.getElementById('viz-legend-real').style.display = 'none';
+      animateToNaive();
+    }
+
+    function showReal() {
+      if (phase === 'real') return;
+      phase = 'real';
+      if (animFrame) cancelAnimationFrame(animFrame);
+      document.getElementById('btn-real').classList.add('active');
+      document.getElementById('btn-naive').classList.remove('active');
+      document.getElementById('viz-legend-naive').style.display = 'none';
+      document.getElementById('viz-legend-real').style.display = '';
+      animateToReal();
+    }
+
+    // Auto-trigger the real view when problem section enters viewport
+    const problemSection = document.getElementById('problem');
+    let autoTriggered = false;
+    const autoObserver = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting && !autoTriggered) {
+          autoTriggered = true;
+          setTimeout(() => showReal(), 1200);
+          autoObserver.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.4 });
+    autoObserver.observe(problemSection);
+
+    initCanvas();
+    drawDots();
+
+    window.addEventListener('resize', () => {
+      initCanvas();
+      drawDots();
+      if (phase === 'real') {
+        dots.forEach(d => { if (d.isDecline) d.color = d.targetColor; });
+        drawDots();
+      }
+    });
+  </script>
+</body>
+</html>
