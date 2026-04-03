@@ -30,7 +30,7 @@ The analysis follows Shopify's published Product Success Metrics Framework (user
 │   ├── 04_regression.ipynb             # OLS (statsmodels), SHAP values, VIF diagnostics, GMV model
 │   ├── 05_power_analysis.ipynb         # TTestIndPower, power curves, merchant vs. order-level guardrail
 │   └── 06_ai_summaries.ipynb          # Llama 3 8B via Ollama, merchant health briefs for all 4 segments
-├── docs/
+├── writeups/
 │   ├── product_brief.md
 │   ├── experiment_design.md
 │   └── decision_memo.md
@@ -38,7 +38,7 @@ The analysis follows Shopify's published Product Success Metrics Framework (user
 │   ├── merchant_features.py
 │   ├── merchant_segments.py
 │   └── merchant_summaries.py
-└── site/                       # Project website (GitHub Pages)
+└── docs/                       # Project website (GitHub Pages)
     ├── index.html              # Product brief page (non-technical audience)
     └── technical.html          # Technical deep dive (DS reviewers)
 ```
@@ -70,9 +70,9 @@ ollama pull llama3
 
 | Deliverable | Audience | Location |
 |-------------|----------|----------|
-| Product Brief | Product reviewers | [docs/product_brief.md](docs/product_brief.md) |
-| Experiment Design | Technical reviewers | [docs/experiment_design.md](docs/experiment_design.md) |
-| Decision Memo | All reviewers | [docs/decision_memo.md](docs/decision_memo.md) |
+| Product Brief | Product reviewers | [docs/product_brief.md](writeups/product_brief.md) |
+| Experiment Design | Technical reviewers | [docs/experiment_design.md](writeups/experiment_design.md) |
+| Decision Memo | All reviewers | [docs/decision_memo.md](writeups/decision_memo.md) |
 | Technical Notebooks | Technical reviewers | [notebooks/](notebooks/) |
 | Project Website | All reviewers | [jessicabat.github.io/merchant-growth-intelligence](https://jessicabat.github.io/merchant-growth-intelligence/) |
 
