@@ -1,5 +1,6 @@
 data/raw/
-data/processed/
+data/processed/*.csv
 CLAUDE.md
 .claude/
 site/
+PROJECT_MEMO.md

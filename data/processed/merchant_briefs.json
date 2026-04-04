@@ -1,0 +1,182 @@
+[
+  {
+    "seller_id": "1f7fd2a6fcd5a6fa5d8a4dabc72aaae0",
+    "segment": "At Risk",
+    "input_metrics": {
+      "total_gmv": 531.8,
+      "order_count": 3,
+      "avg_review_score": 5.0,
+      "pct_orders_late": 0.0,
+      "on_time_rate": 1.0,
+      "avg_shipping_days": 7.11,
+      "recency_days": 114.2,
+      "top_category": "housewares",
+      "trajectory": "Declining",
+      "order_change_pct": -50.0
+    },
+    "brief_text": "Here is the brief health summary for this merchant:\n\nThis At-Risk merchant in the Housewares category has seen a decline in their business, with a -50% drop in order volume between H1 and H2. Despite this, they are excelling in customer satisfaction, boasting an impressive 5.00/5.0 average review score. One area of strength is their on-time delivery rate, which remains at 100.0%. However, the merchant's recency is concerning, with a 114-day gap since their last order, indicating a need for re-engagement efforts. To address this, I recommend that the platform sends targeted promotional emails to this merchant's inactive customer base to encourage repeat business and stimulate growth.",
+    "generated_by": "ollama/llama3 (live)"
+  },
+  {
+    "seller_id": "538caafddff204241cecbf3a02e6b3cf",
+    "segment": "At Risk",
+    "input_metrics": {
+      "total_gmv": 128.4,
+      "order_count": 8,
+      "avg_review_score": 2.75,
+      "pct_orders_late": 0.5,
+      "on_time_rate": 0.5,
+      "avg_shipping_days": 17.31,
+      "recency_days": 48.2,
+      "top_category": "baby",
+      "trajectory": "Stable",
+      "order_change_pct": 0.0
+    },
+    "brief_text": "Here is the brief health summary for this merchant:\n\nThis At-Risk merchant, specializing in Baby products, has maintained a stable business trajectory with no significant changes in order volume over the past six months. Their strongest metric is their average review score of 2.75/5.0, indicating that customers are generally satisfied with their purchases. However, they face a significant risk due to their low on-time delivery rate of 50%, which may be impacting customer satisfaction and loyalty. To improve this merchant's performance, the platform should prioritize optimizing shipping logistics to reduce average shipping days and increase the on-time delivery rate.",
+    "generated_by": "ollama/llama3 (live)"
+  },
+  {
+    "seller_id": "4869f7a5dfa277a7dca6462dcf3b52b2",
+    "segment": "Champions",
+    "input_metrics": {
+      "total_gmv": 226987.93,
+      "order_count": 1117,
+      "avg_review_score": 4.1641,
+      "pct_orders_late": 0.1164,
+      "on_time_rate": 0.8836,
+      "avg_shipping_days": 15.09,
+      "recency_days": 4.8,
+      "top_category": "watches_gifts",
+      "trajectory": "Growing",
+      "order_change_pct": 713.82
+    },
+    "brief_text": "Here is the health summary for this merchant:\n\nThis Champion-level merchant, specializing in Watches Gifts, has seen a remarkable growth of 714% in their order volume over the past half-year. Their strongest metric is their average review score, which stands at an impressive 4.16/5.0, indicating high customer satisfaction. However, there is room for improvement in their shipping efficiency, with an on-time delivery rate of 88.4%, and an average shipping time of 15.1 days. To further support this merchant's growth, the platform should prioritize optimizing their shipping process to reduce transit times and increase customer satisfaction.\n\n(Note: The recommendation focuses on shipping optimization as it is a key area for improvement, given the relatively high average shipping time.)",
+    "generated_by": "ollama/llama3 (live)"
+  },
+  {
+    "seller_id": "5dceca129747e92ff8ef7a997dc4f8ca",
+    "segment": "Champions",
+    "input_metrics": {
+      "total_gmv": 111126.73,
+      "order_count": 321,
+      "avg_review_score": 4.0095,
+      "pct_orders_late": 0.0623,
+      "on_time_rate": 0.9377,
+      "avg_shipping_days": 11.59,
+      "recency_days": 64.7,
+      "top_category": "luggage_accessories",
+      "trajectory": "Declining",
+      "order_change_pct": -26.88
+    },
+    "brief_text": "Here is the brief health summary for the merchant:\n\nAs a Champion in the Luggage Accessories segment, this merchant has experienced a declining trend in order volume, with a 27% decrease from H1 to H2. Despite this decline, their strong average review score of 4.01/5.0 and high on-time delivery rate of 93.8% indicate that they are still delivering excellent customer experiences. One area for improvement is their shipping speed, which takes an average of 11.6 days, potentially impacting customer satisfaction. To address this, the platform should consider offering a premium shipping option or negotiating with logistics providers to improve delivery times and increase customer loyalty.",
+    "generated_by": "ollama/llama3 (live)"
+  },
+  {
+    "seller_id": "dbc22125167c298ef99da25668e1011f",
+    "segment": "Champions",
+    "input_metrics": {
+      "total_gmv": 32829.12,
+      "order_count": 387,
+      "avg_review_score": 4.3523,
+      "pct_orders_late": 0.0258,
+      "on_time_rate": 0.9742,
+      "avg_shipping_days": 11.5,
+      "recency_days": 5.8,
+      "top_category": "luggage_accessories",
+      "trajectory": "Growing",
+      "order_change_pct": 33.14
+    },
+    "brief_text": "Here is the brief health summary for the merchant:\n\nThis Champion-level merchant, specializing in Luggage Accessories, has seen a strong business trajectory with growing order volume (+33% from H1 to H2). Their single strongest metric is their exceptional on-time delivery rate of 97.4%, demonstrating their ability to meet customer expectations. However, they may be vulnerable to potential delays due to their relatively high average shipping days at 11.5 days. To further support this merchant's growth, the platform should consider implementing a shipping optimization feature to help reduce transit times and maintain their high delivery performance.",
+    "generated_by": "ollama/llama3 (live)"
+  },
+  {
+    "seller_id": "e2a1ac9bf33e5549a2a4f834e70df2f8",
+    "segment": "Dormant",
+    "input_metrics": {
+      "total_gmv": 14999.45,
+      "order_count": 5,
+      "avg_review_score": 4.8,
+      "pct_orders_late": 0.0,
+      "on_time_rate": 1.0,
+      "avg_shipping_days": 12.34,
+      "recency_days": 419.0,
+      "top_category": "computers_accessories",
+      "trajectory": null,
+      "order_change_pct": null
+    },
+    "brief_text": "Here is the health summary for this merchant:\n\nThis dormant merchant in the Computers Accessories segment has a stagnant business, with only 5 total orders and no recent activity. Their strongest metric is their excellent on-time delivery rate of 100%, indicating they are doing something right in terms of logistics. However, their low order volume and long average shipping days (12.3) suggest that customers may be waiting a while to receive their products. To help this merchant get back on track, the platform should consider offering a promotion or loyalty program to incentivize repeat business and encourage new orders.",
+    "generated_by": "ollama/llama3 (live)"
+  },
+  {
+    "seller_id": "2059c39f76271d4ca3f15b5ffaccc8b8",
+    "segment": "Dormant",
+    "input_metrics": {
+      "total_gmv": 604.9,
+      "order_count": 12,
+      "avg_review_score": 4.5,
+      "pct_orders_late": 0.0,
+      "on_time_rate": 1.0,
+      "avg_shipping_days": 9.59,
+      "recency_days": 355.8,
+      "top_category": "books_general_interest",
+      "trajectory": "Declining",
+      "order_change_pct": -90.91
+    },
+    "brief_text": "Here is the brief health summary for the merchant:\n\nThis dormant merchant specializes in Books General Interest and has seen a significant decline in orders, with a -91% drop in order volume between H1 and H2. Their strongest metric is their high average review score of 4.50/5.0, indicating customer satisfaction. However, their single biggest risk is their long average shipping days at 9.6 days, which may be impacting customer loyalty. To improve the merchant's performance, I recommend that the platform prioritize optimizing their logistics and delivery process to reduce shipping times and increase customer satisfaction.",
+    "generated_by": "ollama/llama3 (live)"
+  },
+  {
+    "seller_id": "b37c4c02bda3161a7546a4e6d222d5b2",
+    "segment": "Rising Stars",
+    "input_metrics": {
+      "total_gmv": 24075.0,
+      "order_count": 4,
+      "avg_review_score": 2.25,
+      "pct_orders_late": 0.25,
+      "on_time_rate": 0.75,
+      "avg_shipping_days": 18.67,
+      "recency_days": 45.0,
+      "top_category": "fixed_telephony",
+      "trajectory": "Growing",
+      "order_change_pct": 200.0
+    },
+    "brief_text": "Here is the health summary for this merchant:\n\nThis Rising Star merchant in the Fixed Telephony category has seen a significant surge in growth, with a 200% increase in order volume from H1 to H2. Their strongest metric is their on-time delivery rate of 75%, indicating that they are consistently meeting customer expectations. However, their average review score of 2.25/5.0 suggests room for improvement in terms of customer satisfaction. To further support this merchant's growth, the platform should prioritize implementing a shipping optimization strategy to reduce average shipping days and improve overall delivery performance.",
+    "generated_by": "ollama/llama3 (live)"
+  },
+  {
+    "seller_id": "1c5e4e49b9079480255b49d50aac1aa9",
+    "segment": "Rising Stars",
+    "input_metrics": {
+      "total_gmv": 10173.11,
+      "order_count": 12,
+      "avg_review_score": 4.3333,
+      "pct_orders_late": 0.0,
+      "on_time_rate": 1.0,
+      "avg_shipping_days": 8.8,
+      "recency_days": 24.4,
+      "top_category": "bed_bath_table",
+      "trajectory": "Growing",
+      "order_change_pct": 40.0
+    },
+    "brief_text": "Here is the brief health summary for the merchant:\n\nThis Rising Star merchant in the Bed Bath Table category has seen a strong business trajectory, with a 40% increase in order volume from H1 to H2. Their single strongest metric is their impressive on-time delivery rate of 100%, which reflects their commitment to customer satisfaction. However, their average shipping days are slightly slower than ideal at 8.8 days, indicating an opportunity for improvement. To support the merchant's continued growth, I recommend that the platform prioritize optimizing their logistics and shipping processes to reduce average shipping days and maintain their excellent delivery performance.",
+    "generated_by": "ollama/llama3 (live)"
+  },
+  {
+    "seller_id": "edd066cd02126d7800f9b66e980e9931",
+    "segment": "Rising Stars",
+    "input_metrics": {
+      "total_gmv": 987.7,
+      "order_count": 6,
+      "avg_review_score": 5.0,
+      "pct_orders_late": 0.1667,
+      "on_time_rate": 0.8333,
+      "avg_shipping_days": 11.9,
+      "recency_days": 77.3,
+      "top_category": "housewares",
+      "trajectory": "Stable",
+      "order_change_pct": 0.0
+    },
+    "brief_text": "Here is the brief health summary for the merchant:\n\nAs a Rising Star in the Housewares segment, this merchant has maintained a stable business trajectory with no significant changes in order volume over the past half-year. Their strongest metric is their exceptional average review score of 5.00/5.0, indicating high customer satisfaction. However, their on-time delivery rate could be improved, currently sitting at 83.3%, which may impact customer loyalty and retention. To address this, I recommend that the platform provides a shipping optimization tool to help the merchant streamline their logistics and potentially reduce average shipping days from 11.9 days.",
+    "generated_by": "ollama/llama3 (live)"
+  }
+]
