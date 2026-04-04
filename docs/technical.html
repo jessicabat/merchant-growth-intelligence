@@ -10,26 +10,47 @@
   <style>
     :root {
       --bg: #ffffff;
+      --bg-hero: #f8f8f6;
+      --bg-surface: #f9fafb;
       --surface: #ffffff;
-      --text: #111827;
+      --text: #0f0f0f;
       --text-secondary: #4b5563;
       --text-muted: #9ca3af;
       --border: #e5e7eb;
+      --border-subtle: #f3f4f6;
       --code-bg: #1e1e2e;
       --code-text: #cdd6f4;
-      --champions: #2ecc71;
-      --rising: #3498db;
-      --atrisk: #f39c12;
-      --dormant: #e74c3c;
-      --accent: #6366f1;
+
+      --champions:        #16a34a;
+      --champions-bg:     #f0fdf4;
+      --champions-border: #86efac;
+      --champions-dark:   #166534;
+
+      --rising:           #2563eb;
+      --rising-bg:        #eff6ff;
+      --rising-border:    #93c5fd;
+      --rising-dark:      #1e40af;
+
+      --atrisk:           #d97706;
+      --atrisk-bg:        #fffbeb;
+      --atrisk-border:    #fcd34d;
+      --atrisk-dark:      #92400e;
+
+      --dormant:          #dc2626;
+      --dormant-bg:       #fef2f2;
+      --dormant-border:   #fca5a5;
+      --dormant-dark:     #991b1b;
+
+      --accent: #0f0f0f;
       --serif: 'Newsreader', Georgia, serif;
       --sans: 'Inter', system-ui, sans-serif;
-      --shadow: 0 4px 16px rgba(0,0,0,0.06);
-      --shadow-hover: 0 12px 40px rgba(0,0,0,0.1);
-      --radius: 16px;
+      --shadow: 0 1px 3px rgba(0,0,0,0.05), 0 4px 12px rgba(0,0,0,0.04);
+      --shadow-hover: 0 8px 24px rgba(0,0,0,0.09), 0 2px 6px rgba(0,0,0,0.04);
+      --radius: 10px;
+      --radius-sm: 6px;
       --max-prose: 720px;
       --max-wide: 960px;
-      --transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      --transition: 0.25s cubic-bezier(0.4, 0, 0.2, 1);
     }
 
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -52,8 +73,8 @@
 
     /* ── Scroll Animations ── */
     .fade-up {
-      opacity: 0; transform: translateY(28px);
-      transition: opacity 0.55s ease, transform 0.55s ease;
+      opacity: 0; transform: translateY(20px);
+      transition: opacity 0.5s ease, transform 0.5s ease;
     }
     .fade-up.visible { opacity: 1; transform: translateY(0); }
     .fade-up.d1 { transition-delay: 0.08s; }
@@ -63,8 +84,7 @@
     /* ── Layout ── */
     .container { max-width: var(--max-wide); margin: 0 auto; padding: 0 32px; }
 
-    section { padding: 88px 0; }
-    section + section { border-top: 1px solid var(--border); }
+    section { padding: 80px 0; }
 
     /* ── Nav ── */
     nav {
@@ -85,12 +105,15 @@
     }
     .nav-pill:hover { background: var(--text); color: white; border-color: var(--text); }
     .nav-pill.active { background: var(--text); color: white; border-color: var(--text); }
+    .nav-menu-btn {
+      display: none; background: none; border: none; cursor: pointer;
+      color: var(--text); padding: 4px; line-height: 0;
+    }
 
     /* ── Section Labels ── */
     .section-label {
-      position: sticky; top: 60px; z-index: 40;
-      background: rgba(255,255,255,0.92); backdrop-filter: blur(8px);
-      padding: 10px 0; margin-bottom: 28px; display: block;
+      display: block;
+      margin-bottom: 14px;
       font-size: 11px; font-weight: 700; letter-spacing: 0.1em;
       text-transform: uppercase; color: var(--text-muted);
     }
@@ -190,25 +213,27 @@
       background: var(--surface); border: 2px solid var(--border);
       border-radius: 10px; padding: 16px; text-align: center;
     }
-    .k-option.selected { border-color: var(--rising); background: #eff6ff; }
+    .k-option.selected { border-color: var(--rising-border); background: var(--rising-bg); }
     .k-option .k-val { font-size: 28px; font-weight: 800; color: var(--text); }
-    .k-option.selected .k-val { color: var(--rising); }
+    .k-option.selected .k-val { color: var(--rising-dark); }
     .k-option .k-sil { font-size: 13px; color: var(--text-muted); margin-top: 4px; }
     .k-option .k-label { font-size: 12px; font-weight: 600; margin-top: 8px; color: var(--text-secondary); }
-    .k-option.selected .k-label { color: var(--rising); }
+    .k-option.selected .k-label { color: var(--rising-dark); }
 
+    .table-scroll { overflow-x: auto; -webkit-overflow-scrolling: touch; border-radius: var(--radius); box-shadow: var(--shadow); margin-top: 24px; }
     .cluster-table {
       width: 100%; border-collapse: collapse; font-size: 13px;
       background: var(--surface); border-radius: var(--radius);
-      overflow: hidden; box-shadow: var(--shadow); margin-top: 24px;
+      overflow: hidden;
     }
     .cluster-table th {
-      background: var(--text); color: white; font-size: 11px; font-weight: 700;
+      background: #1e293b; color: rgba(255,255,255,0.9); font-size: 11px; font-weight: 500;
       text-transform: uppercase; letter-spacing: 0.06em; padding: 12px 16px; text-align: left;
     }
     .cluster-table td {
-      padding: 12px 16px; border-bottom: 1px solid var(--border); color: var(--text-secondary);
+      padding: 13px 16px; border-bottom: 1px solid var(--border); color: var(--text-secondary);
     }
+    .cluster-table tbody tr:nth-child(even) td { background: var(--border-subtle); }
     .cluster-table tr:last-child td { border-bottom: none; }
     .cluster-table td:first-child { font-weight: 600; color: var(--text); }
     .seg-dot {
@@ -263,12 +288,12 @@
     }
     .shap-feature { width: 160px; flex-shrink: 0; color: var(--text-secondary); font-weight: 500; text-align: right; }
     .shap-bar-wrap { flex: 1; background: var(--border); border-radius: 4px; height: 10px; overflow: hidden; }
-    .shap-bar { height: 100%; border-radius: 4px; }
+    .shap-bar { height: 100%; border-radius: 4px; width: 0; transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1); }
     .shap-val { width: 48px; flex-shrink: 0; color: var(--text-muted); font-size: 12px; font-family: 'JetBrains Mono', monospace; }
 
     .diagnostics-note {
-      background: var(--surface); border-left: 3px solid var(--atrisk);
-      border-radius: 0 10px 10px 0; padding: 16px 20px; font-size: 14px;
+      background: var(--atrisk-bg); border-left: 3px solid var(--atrisk);
+      border-radius: 0 var(--radius) var(--radius) 0; padding: 16px 20px; font-size: 14px;
       color: var(--text-secondary); line-height: 1.65;
     }
     .diagnostics-note strong { color: var(--text); }
@@ -287,20 +312,21 @@
     .power-table {
       width: 100%; border-collapse: collapse; font-size: 13px;
       background: var(--surface); border-radius: var(--radius);
-      overflow: hidden; box-shadow: var(--shadow); margin-bottom: 24px;
+      overflow: hidden; margin-bottom: 24px;
     }
     .power-table th {
-      background: var(--text); color: white; font-size: 11px; font-weight: 700;
+      background: #1e293b; color: rgba(255,255,255,0.9); font-size: 11px; font-weight: 500;
       text-transform: uppercase; letter-spacing: 0.06em; padding: 11px 16px; text-align: left;
     }
-    .power-table td { padding: 11px 16px; border-bottom: 1px solid var(--border); color: var(--text-secondary); }
+    .power-table td { padding: 12px 16px; border-bottom: 1px solid var(--border); color: var(--text-secondary); }
+    .power-table tbody tr:nth-child(even) td { background: var(--border-subtle); }
     .power-table tr:last-child td { border-bottom: none; }
     .power-table td:first-child { font-weight: 500; color: var(--text); }
-    .power-table tbody tr:hover td { background: #f9fafb; }
-    .power-table .warn td { background: #fff5f5; }
+    .power-table tbody tr:hover td { background: #f0f0ef; }
+    .power-table .warn td { background: var(--dormant-bg); }
     .power-table .warn td:first-child { border-left: 4px solid var(--dormant); }
-    .power-table .warn td:last-child { color: var(--dormant); font-weight: 600; }
-    .power-table .ok td:last-child { color: var(--champions); font-weight: 600; }
+    .power-table .warn td:last-child { color: var(--dormant-dark); font-weight: 600; }
+    .power-table .ok td:last-child { color: var(--champions-dark); font-weight: 600; }
 
     .power-curve-wrap {
       background: var(--surface); border: 1px solid var(--border);
@@ -354,7 +380,7 @@
     }
 
     .ai-note {
-      background: var(--surface); border-radius: 10px; padding: 16px 20px;
+      background: var(--rising-bg); border-radius: 0 var(--radius) var(--radius) 0; padding: 16px 20px;
       border-left: 3px solid var(--rising); font-size: 14px; color: var(--text-secondary);
       line-height: 1.65;
     }
@@ -368,7 +394,7 @@
       border-radius: 10px; padding: 16px 20px; text-decoration: none;
       transition: all 0.2s; color: var(--text);
     }
-    .notebook-link:hover { border-color: var(--rising); box-shadow: 0 2px 12px rgba(52,152,219,0.12); }
+    .notebook-link:hover { border-color: var(--rising-border); box-shadow: 0 2px 12px rgba(37,99,235,0.1); }
     .nb-num {
       width: 36px; height: 36px; background: var(--text); color: white;
       border-radius: 8px; display: flex; align-items: center; justify-content: center;
@@ -408,9 +434,26 @@
     }
 
     @media (max-width: 640px) {
+      section { padding: 64px 0; }
+      .container { padding: 0 20px; }
       .coef-grid, .power-grid, .io-example, .cleaning-list { grid-template-columns: 1fr; }
       .ai-arrow { display: none; }
       .k-grid { flex-direction: column; }
+      .nav-menu-btn { display: flex; }
+      nav .nav-right {
+        display: none; position: absolute; top: 100%; left: 0; right: 0;
+        flex-direction: column; gap: 0;
+        background: white; border-bottom: 1px solid var(--border);
+        padding: 8px 0;
+      }
+      nav .nav-right a {
+        display: block; padding: 12px 24px; border-radius: 0;
+        font-size: 15px; font-weight: 500; text-decoration: none;
+        color: var(--text-secondary);
+      }
+      nav .nav-right a.active,
+      nav .nav-right a:hover { color: var(--text); }
+      nav.menu-open .nav-right { display: flex; }
     }
   </style>
 </head>
@@ -420,6 +463,9 @@
   <!-- NAV -->
   <nav>
     <a href="index.html" class="nav-brand">Merchant Growth Intelligence</a>
+    <button class="nav-menu-btn" aria-label="Open menu" aria-expanded="false">
+      <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M2 4h14M2 9h14M2 14h14" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+    </button>
     <div class="nav-right">
       <a href="index.html" class="nav-pill">Product Brief</a>
       <a href="technical.html" class="nav-pill active">Technical</a>
@@ -468,7 +514,7 @@
             <line x1="130" y1="100" x2="165" y2="100" stroke="#9ca3af" stroke-width="1.5" marker-end="url(#arr)"/>
 
             <!-- Box 2: Merge and clean -->
-            <rect x="168" y="60" width="145" height="80" rx="10" fill="#eff6ff" stroke="#3498db" stroke-width="1.5"/>
+            <rect x="168" y="60" width="145" height="80" rx="10" fill="#eff6ff" stroke="#2563eb" stroke-width="1.5"/>
             <text x="241" y="90" text-anchor="middle" font-family="Inter,sans-serif" font-size="12" font-weight="600" fill="#1e40af">Clean and Merge</text>
             <text x="241" y="107" text-anchor="middle" font-family="Inter,sans-serif" font-size="10" fill="#3b82f6">Join on order_id,</text>
             <text x="241" y="121" text-anchor="middle" font-family="Inter,sans-serif" font-size="10" fill="#3b82f6">seller_id, product_id</text>
@@ -476,7 +522,7 @@
             <line x1="313" y1="100" x2="348" y2="100" stroke="#9ca3af" stroke-width="1.5" marker-end="url(#arr)"/>
 
             <!-- Box 3: Feature engineering -->
-            <rect x="351" y="60" width="145" height="80" rx="10" fill="#f0fdf4" stroke="#2ecc71" stroke-width="1.5"/>
+            <rect x="351" y="60" width="145" height="80" rx="10" fill="#f0fdf4" stroke="#16a34a" stroke-width="1.5"/>
             <text x="424" y="90" text-anchor="middle" font-family="Inter,sans-serif" font-size="12" font-weight="600" fill="#166534">Feature Engineering</text>
             <text x="424" y="107" text-anchor="middle" font-family="Inter,sans-serif" font-size="10" fill="#15803d">Aggregate to</text>
             <text x="424" y="121" text-anchor="middle" font-family="Inter,sans-serif" font-size="10" fill="#15803d">merchant level</text>
@@ -565,83 +611,83 @@
           <!-- Dots: growing (blue, above 0 line) -->
           <g clip-path="url(#plotClip)" opacity="0.65">
             <!-- Growing dots (blue) - scattered above center line -->
-            <circle cx="75" cy="95" r="4" fill="#3498db"/>
-            <circle cx="88" cy="75" r="4" fill="#3498db"/>
-            <circle cx="95" cy="110" r="4" fill="#3498db"/>
-            <circle cx="110" cy="85" r="4" fill="#3498db"/>
-            <circle cx="125" cy="60" r="4" fill="#3498db"/>
-            <circle cx="138" cy="90" r="4" fill="#3498db"/>
-            <circle cx="150" cy="70" r="4" fill="#3498db"/>
-            <circle cx="162" cy="100" r="4" fill="#3498db"/>
-            <circle cx="178" cy="55" r="4" fill="#3498db"/>
-            <circle cx="190" cy="80" r="4" fill="#3498db"/>
-            <circle cx="205" cy="115" r="4" fill="#3498db"/>
-            <circle cx="218" cy="65" r="4" fill="#3498db"/>
-            <circle cx="230" cy="88" r="4" fill="#3498db"/>
-            <circle cx="248" cy="75" r="4" fill="#3498db"/>
-            <circle cx="260" cy="50" r="4" fill="#3498db"/>
-            <circle cx="272" cy="95" r="4" fill="#3498db"/>
-            <circle cx="288" cy="70" r="4" fill="#3498db"/>
-            <circle cx="300" cy="82" r="4" fill="#3498db"/>
-            <circle cx="315" cy="60" r="4" fill="#3498db"/>
-            <circle cx="328" cy="100" r="4" fill="#3498db"/>
-            <circle cx="342" cy="78" r="4" fill="#3498db"/>
-            <circle cx="358" cy="88" r="4" fill="#3498db"/>
-            <circle cx="372" cy="65" r="4" fill="#3498db"/>
-            <circle cx="385" cy="55" r="4" fill="#3498db"/>
-            <circle cx="398" cy="90" r="4" fill="#3498db"/>
-            <circle cx="414" cy="72" r="4" fill="#3498db"/>
-            <circle cx="428" cy="80" r="4" fill="#3498db"/>
-            <circle cx="442" cy="62" r="4" fill="#3498db"/>
-            <circle cx="458" cy="95" r="4" fill="#3498db"/>
-            <circle cx="472" cy="70" r="4" fill="#3498db"/>
-            <circle cx="485" cy="58" r="4" fill="#3498db"/>
-            <circle cx="500" cy="82" r="4" fill="#3498db"/>
-            <circle cx="515" cy="68" r="4" fill="#3498db"/>
-            <circle cx="528" cy="92" r="4" fill="#3498db"/>
-            <circle cx="542" cy="75" r="4" fill="#3498db"/>
-            <circle cx="558" cy="60" r="4" fill="#3498db"/>
-            <circle cx="572" cy="85" r="4" fill="#3498db"/>
-            <circle cx="588" cy="70" r="4" fill="#3498db"/>
-            <circle cx="602" cy="55" r="4" fill="#3498db"/>
-            <circle cx="618" cy="80" r="4" fill="#3498db"/>
+            <circle cx="75" cy="95" r="4" fill="#2563eb"/>
+            <circle cx="88" cy="75" r="4" fill="#2563eb"/>
+            <circle cx="95" cy="110" r="4" fill="#2563eb"/>
+            <circle cx="110" cy="85" r="4" fill="#2563eb"/>
+            <circle cx="125" cy="60" r="4" fill="#2563eb"/>
+            <circle cx="138" cy="90" r="4" fill="#2563eb"/>
+            <circle cx="150" cy="70" r="4" fill="#2563eb"/>
+            <circle cx="162" cy="100" r="4" fill="#2563eb"/>
+            <circle cx="178" cy="55" r="4" fill="#2563eb"/>
+            <circle cx="190" cy="80" r="4" fill="#2563eb"/>
+            <circle cx="205" cy="115" r="4" fill="#2563eb"/>
+            <circle cx="218" cy="65" r="4" fill="#2563eb"/>
+            <circle cx="230" cy="88" r="4" fill="#2563eb"/>
+            <circle cx="248" cy="75" r="4" fill="#2563eb"/>
+            <circle cx="260" cy="50" r="4" fill="#2563eb"/>
+            <circle cx="272" cy="95" r="4" fill="#2563eb"/>
+            <circle cx="288" cy="70" r="4" fill="#2563eb"/>
+            <circle cx="300" cy="82" r="4" fill="#2563eb"/>
+            <circle cx="315" cy="60" r="4" fill="#2563eb"/>
+            <circle cx="328" cy="100" r="4" fill="#2563eb"/>
+            <circle cx="342" cy="78" r="4" fill="#2563eb"/>
+            <circle cx="358" cy="88" r="4" fill="#2563eb"/>
+            <circle cx="372" cy="65" r="4" fill="#2563eb"/>
+            <circle cx="385" cy="55" r="4" fill="#2563eb"/>
+            <circle cx="398" cy="90" r="4" fill="#2563eb"/>
+            <circle cx="414" cy="72" r="4" fill="#2563eb"/>
+            <circle cx="428" cy="80" r="4" fill="#2563eb"/>
+            <circle cx="442" cy="62" r="4" fill="#2563eb"/>
+            <circle cx="458" cy="95" r="4" fill="#2563eb"/>
+            <circle cx="472" cy="70" r="4" fill="#2563eb"/>
+            <circle cx="485" cy="58" r="4" fill="#2563eb"/>
+            <circle cx="500" cy="82" r="4" fill="#2563eb"/>
+            <circle cx="515" cy="68" r="4" fill="#2563eb"/>
+            <circle cx="528" cy="92" r="4" fill="#2563eb"/>
+            <circle cx="542" cy="75" r="4" fill="#2563eb"/>
+            <circle cx="558" cy="60" r="4" fill="#2563eb"/>
+            <circle cx="572" cy="85" r="4" fill="#2563eb"/>
+            <circle cx="588" cy="70" r="4" fill="#2563eb"/>
+            <circle cx="602" cy="55" r="4" fill="#2563eb"/>
+            <circle cx="618" cy="80" r="4" fill="#2563eb"/>
 
             <!-- Declining dots (red) - scattered in the 4.0-5.0 range but BELOW the zero line
                  These are the "silently failing" merchants: high review, declining volume -->
-            <circle cx="72" cy="168" r="4" fill="#e74c3c"/>
-            <circle cx="85" cy="185" r="4" fill="#e74c3c"/>
-            <circle cx="100" cy="155" r="4" fill="#e74c3c"/>
-            <circle cx="118" cy="175" r="4" fill="#e74c3c"/>
-            <circle cx="132" cy="195" r="4" fill="#e74c3c"/>
-            <circle cx="148" cy="162" r="4" fill="#e74c3c"/>
-            <circle cx="165" cy="180" r="4" fill="#e74c3c"/>
-            <circle cx="182" cy="145" r="4" fill="#e74c3c"/>
-            <circle cx="200" cy="200" r="4" fill="#e74c3c"/>
-            <circle cx="220" cy="170" r="4" fill="#e74c3c"/>
-            <circle cx="240" cy="158" r="4" fill="#e74c3c"/>
-            <circle cx="258" cy="190" r="4" fill="#e74c3c"/>
-            <circle cx="278" cy="165" r="4" fill="#e74c3c"/>
-            <circle cx="298" cy="180" r="4" fill="#e74c3c"/>
-            <circle cx="320" cy="155" r="4" fill="#e74c3c"/>
-            <circle cx="338" cy="210" r="4" fill="#e74c3c"/>
-            <circle cx="358" cy="170" r="4" fill="#e74c3c"/>
-            <circle cx="380" cy="150" r="4" fill="#e74c3c"/>
-            <circle cx="400" cy="185" r="4" fill="#e74c3c"/>
-            <circle cx="422" cy="175" r="4" fill="#e74c3c"/>
-            <circle cx="445" cy="160" r="4" fill="#e74c3c"/>
-            <circle cx="465" cy="195" r="4" fill="#e74c3c"/>
-            <circle cx="485" cy="168" r="4" fill="#e74c3c"/>
-            <circle cx="508" cy="180" r="4" fill="#e74c3c"/>
+            <circle cx="72" cy="168" r="4" fill="#dc2626"/>
+            <circle cx="85" cy="185" r="4" fill="#dc2626"/>
+            <circle cx="100" cy="155" r="4" fill="#dc2626"/>
+            <circle cx="118" cy="175" r="4" fill="#dc2626"/>
+            <circle cx="132" cy="195" r="4" fill="#dc2626"/>
+            <circle cx="148" cy="162" r="4" fill="#dc2626"/>
+            <circle cx="165" cy="180" r="4" fill="#dc2626"/>
+            <circle cx="182" cy="145" r="4" fill="#dc2626"/>
+            <circle cx="200" cy="200" r="4" fill="#dc2626"/>
+            <circle cx="220" cy="170" r="4" fill="#dc2626"/>
+            <circle cx="240" cy="158" r="4" fill="#dc2626"/>
+            <circle cx="258" cy="190" r="4" fill="#dc2626"/>
+            <circle cx="278" cy="165" r="4" fill="#dc2626"/>
+            <circle cx="298" cy="180" r="4" fill="#dc2626"/>
+            <circle cx="320" cy="155" r="4" fill="#dc2626"/>
+            <circle cx="338" cy="210" r="4" fill="#dc2626"/>
+            <circle cx="358" cy="170" r="4" fill="#dc2626"/>
+            <circle cx="380" cy="150" r="4" fill="#dc2626"/>
+            <circle cx="400" cy="185" r="4" fill="#dc2626"/>
+            <circle cx="422" cy="175" r="4" fill="#dc2626"/>
+            <circle cx="445" cy="160" r="4" fill="#dc2626"/>
+            <circle cx="465" cy="195" r="4" fill="#dc2626"/>
+            <circle cx="485" cy="168" r="4" fill="#dc2626"/>
+            <circle cx="508" cy="180" r="4" fill="#dc2626"/>
           </g>
 
           <!-- Annotation: silently failing region -->
-          <rect x="65" y="140" width="200" height="75" rx="6" fill="none" stroke="#e74c3c" stroke-width="1.5" stroke-dasharray="5,3" opacity="0.7"/>
-          <text x="165" y="228" text-anchor="middle" font-family="Inter,sans-serif" font-size="10" fill="#e74c3c" font-weight="600">silently failing</text>
+          <rect x="65" y="140" width="200" height="75" rx="6" fill="none" stroke="#dc2626" stroke-width="1.5" stroke-dasharray="5,3" opacity="0.7"/>
+          <text x="165" y="228" text-anchor="middle" font-family="Inter,sans-serif" font-size="10" fill="#dc2626" font-weight="600">silently failing</text>
 
           <!-- Legend -->
-          <circle cx="460" cy="28" r="5" fill="#3498db"/>
+          <circle cx="460" cy="28" r="5" fill="#2563eb"/>
           <text x="470" y="32" font-family="Inter,sans-serif" font-size="11" fill="#6b7280">Growing / stable</text>
-          <circle cx="560" cy="28" r="5" fill="#e74c3c"/>
+          <circle cx="560" cy="28" r="5" fill="#dc2626"/>
           <text x="570" y="32" font-family="Inter,sans-serif" font-size="11" fill="#6b7280">Declining</text>
         </svg>
 
@@ -708,7 +754,7 @@
       </div>
 
       <h3 class="fade-up">Cluster profile table</h3>
-      <table class="cluster-table fade-up">
+      <div class="table-scroll fade-up"><table class="cluster-table">
         <thead>
           <tr>
             <th>Segment</th>
@@ -723,7 +769,7 @@
         </thead>
         <tbody>
           <tr>
-            <td><span class="seg-dot" style="background:#2ecc71"></span>Champions</td>
+            <td><span class="seg-dot" style="background:#16a34a"></span>Champions</td>
             <td>645</td>
             <td>80.9%</td>
             <td>65</td>
@@ -733,7 +779,7 @@
             <td>15.4%</td>
           </tr>
           <tr>
-            <td><span class="seg-dot" style="background:#3498db"></span>Rising Stars</td>
+            <td><span class="seg-dot" style="background:#2563eb"></span>Rising Stars</td>
             <td>999</td>
             <td>15.0%</td>
             <td>10</td>
@@ -743,7 +789,7 @@
             <td>29.3%</td>
           </tr>
           <tr>
-            <td><span class="seg-dot" style="background:#f39c12"></span>At Risk</td>
+            <td><span class="seg-dot" style="background:#d97706"></span>At Risk</td>
             <td>748</td>
             <td>1.2%</td>
             <td>2</td>
@@ -753,7 +799,7 @@
             <td>30.0%</td>
           </tr>
           <tr>
-            <td><span class="seg-dot" style="background:#e74c3c"></span>Dormant</td>
+            <td><span class="seg-dot" style="background:#dc2626"></span>Dormant</td>
             <td>568</td>
             <td>2.9%</td>
             <td>2</td>
@@ -763,7 +809,7 @@
             <td>52.8%</td>
           </tr>
         </tbody>
-      </table>
+      </table></div>
 
       <p class="fade-up" style="margin-top:20px;">One thing worth noting: At Risk and Rising Stars are separated primarily by recency and frequency, not by review score. At Risk merchants actually have higher review scores (4.67 vs. 4.29), which reinforces the finding that review scores do not distinguish struggling merchants from growing ones within the active seller population.</p>
     </div>
@@ -833,37 +879,37 @@
         <div style="margin-top: 8px;">
           <div class="shap-bar-row">
             <div class="shap-feature">avg_shipping_days</div>
-            <div class="shap-bar-wrap"><div class="shap-bar" style="width:100%;background:linear-gradient(90deg,#3498db,#1e88e5)"></div></div>
+            <div class="shap-bar-wrap"><div class="shap-bar" data-w="100" style="background:linear-gradient(90deg,#2563eb,#3b82f6)"></div></div>
             <div class="shap-val">0.104</div>
           </div>
           <div class="shap-bar-row">
             <div class="shap-feature">pct_orders_late</div>
-            <div class="shap-bar-wrap"><div class="shap-bar" style="width:73%;background:linear-gradient(90deg,#e74c3c,#ef5350)"></div></div>
+            <div class="shap-bar-wrap"><div class="shap-bar" data-w="73" style="background:linear-gradient(90deg,#dc2626,#ef4444)"></div></div>
             <div class="shap-val">0.076</div>
           </div>
           <div class="shap-bar-row">
             <div class="shap-feature">state_SP</div>
-            <div class="shap-bar-wrap"><div class="shap-bar" style="width:32%;background:#9ca3af"></div></div>
+            <div class="shap-bar-wrap"><div class="shap-bar" data-w="32" style="background:#9ca3af"></div></div>
             <div class="shap-val">0.034</div>
           </div>
           <div class="shap-bar-row">
             <div class="shap-feature">avg_freight_ratio</div>
-            <div class="shap-bar-wrap"><div class="shap-bar" style="width:18%;background:#9ca3af"></div></div>
+            <div class="shap-bar-wrap"><div class="shap-bar" data-w="18" style="background:#9ca3af"></div></div>
             <div class="shap-val">0.019</div>
           </div>
           <div class="shap-bar-row">
             <div class="shap-feature">num_categories</div>
-            <div class="shap-bar-wrap"><div class="shap-bar" style="width:17%;background:#9ca3af"></div></div>
+            <div class="shap-bar-wrap"><div class="shap-bar" data-w="17" style="background:#9ca3af"></div></div>
             <div class="shap-val">0.017</div>
           </div>
           <div class="shap-bar-row">
             <div class="shap-feature">avg_price</div>
-            <div class="shap-bar-wrap"><div class="shap-bar" style="width:11%;background:#9ca3af"></div></div>
+            <div class="shap-bar-wrap"><div class="shap-bar" data-w="11" style="background:#9ca3af"></div></div>
             <div class="shap-val">0.011</div>
           </div>
           <div class="shap-bar-row">
             <div class="shap-feature">num_skus</div>
-            <div class="shap-bar-wrap"><div class="shap-bar" style="width:3%;background:#e5e7eb"></div></div>
+            <div class="shap-bar-wrap"><div class="shap-bar" data-w="3" style="background:#e5e7eb"></div></div>
             <div class="shap-val">0.003</div>
           </div>
         </div>
@@ -906,7 +952,7 @@
       </div>
 
       <h3 class="fade-up">Power analysis summary table</h3>
-      <table class="power-table fade-up">
+      <div class="table-scroll fade-up"><table class="power-table">
         <thead>
           <tr>
             <th>Metric</th>
@@ -943,7 +989,7 @@
             <td>99.9%</td>
           </tr>
         </tbody>
-      </table>
+      </table></div>
 
       <div class="chart-card fade-up power-curve-wrap">
         <div class="chart-title">Power curve: required N per group vs. minimum detectable effect (alpha=0.05, power=0.80)</div>
@@ -978,11 +1024,11 @@
           <!-- Power curve line -->
           <polyline
             points="60,20 152,155 244,180 336,188 428,192 520,195"
-            fill="none" stroke="#3498db" stroke-width="2.5" stroke-linejoin="round"/>
+            fill="none" stroke="#2563eb" stroke-width="2.5" stroke-linejoin="round"/>
 
           <!-- Design point marker -->
-          <circle cx="428" cy="192" r="7" fill="#3498db" stroke="white" stroke-width="2"/>
-          <text x="440" y="185" font-family="Inter,sans-serif" font-size="11" fill="#3498db" font-weight="700">5pp, N=34</text>
+          <circle cx="428" cy="192" r="7" fill="#2563eb" stroke="white" stroke-width="2"/>
+          <text x="440" y="185" font-family="Inter,sans-serif" font-size="11" fill="#2563eb" font-weight="700">5pp, N=34</text>
           <text x="440" y="198" font-family="Inter,sans-serif" font-size="10" fill="#9ca3af">chosen design point</text>
 
           <!-- Grid lines -->
@@ -1166,6 +1212,42 @@
       entries.forEach(e => { if(e.isIntersecting){ e.target.classList.add('visible'); observer.unobserve(e.target); } });
     }, { threshold: 0.1 });
     document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+
+    // ── SHAP bar fill animation
+    const shapChart = document.querySelector('.shap-chart');
+    let shapAnimated = false;
+    if (shapChart) {
+      new IntersectionObserver((entries) => {
+        if (entries[0].isIntersecting && !shapAnimated) {
+          shapAnimated = true;
+          const bars = shapChart.querySelectorAll('.shap-bar[data-w]');
+          bars.forEach((bar, i) => {
+            setTimeout(() => { bar.style.width = bar.dataset.w + '%'; }, i * 120);
+          });
+        }
+      }, { threshold: 0.2 }).observe(shapChart);
+    }
+
+    // ── Hamburger nav
+    const navMenuBtn = document.querySelector('.nav-menu-btn');
+    const mainNav = document.querySelector('nav');
+    if (navMenuBtn) {
+      navMenuBtn.addEventListener('click', () => {
+        mainNav.classList.toggle('menu-open');
+        const isOpen = mainNav.classList.contains('menu-open');
+        navMenuBtn.setAttribute('aria-expanded', isOpen);
+        navMenuBtn.innerHTML = isOpen
+          ? '<svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M2 2L16 16M16 2L2 16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>'
+          : '<svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M2 4h14M2 9h14M2 14h14" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>';
+      });
+      mainNav.querySelectorAll('.nav-right a').forEach(a => {
+        a.addEventListener('click', () => {
+          mainNav.classList.remove('menu-open');
+          navMenuBtn.setAttribute('aria-expanded', false);
+          navMenuBtn.innerHTML = '<svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M2 4h14M2 9h14M2 14h14" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>';
+        });
+      });
+    }
   </script>
 </body>
 </html>

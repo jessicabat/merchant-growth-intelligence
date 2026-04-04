@@ -6,28 +6,49 @@
   <title>Merchant Growth Intelligence</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;0,6..72,600;0,6..72,700;1,6..72,400&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;0,6..72,600;0,6..72,700;1,6..72,400&display=swap" rel="stylesheet">
   <style>
     :root {
       --bg: #ffffff;
+      --bg-hero: #f8f8f6;
+      --bg-surface: #f9fafb;
       --surface: #ffffff;
-      --text: #111827;
+      --text: #0f0f0f;
       --text-secondary: #4b5563;
       --text-muted: #9ca3af;
       --border: #e5e7eb;
-      --champions: #2ecc71;
-      --rising: #3498db;
-      --atrisk: #f39c12;
-      --dormant: #e74c3c;
-      --accent: #6366f1;
+      --border-subtle: #f3f4f6;
+
+      --champions:        #16a34a;
+      --champions-bg:     #f0fdf4;
+      --champions-border: #86efac;
+      --champions-dark:   #166534;
+
+      --rising:           #2563eb;
+      --rising-bg:        #eff6ff;
+      --rising-border:    #93c5fd;
+      --rising-dark:      #1e40af;
+
+      --atrisk:           #d97706;
+      --atrisk-bg:        #fffbeb;
+      --atrisk-border:    #fcd34d;
+      --atrisk-dark:      #92400e;
+
+      --dormant:          #dc2626;
+      --dormant-bg:       #fef2f2;
+      --dormant-border:   #fca5a5;
+      --dormant-dark:     #991b1b;
+
+      --accent: #0f0f0f;
       --serif: 'Newsreader', Georgia, serif;
       --sans: 'Inter', system-ui, sans-serif;
-      --shadow: 0 4px 16px rgba(0,0,0,0.06);
-      --shadow-hover: 0 12px 40px rgba(0,0,0,0.1);
-      --radius: 16px;
+      --shadow: 0 1px 3px rgba(0,0,0,0.05), 0 4px 12px rgba(0,0,0,0.04);
+      --shadow-hover: 0 8px 24px rgba(0,0,0,0.09), 0 2px 6px rgba(0,0,0,0.04);
+      --radius: 10px;
+      --radius-sm: 6px;
       --max-prose: 720px;
       --max-wide: 960px;
-      --transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      --transition: 0.25s cubic-bezier(0.4, 0, 0.2, 1);
     }
 
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -51,8 +72,8 @@
     /* ── Scroll Animations ── */
     .fade-up {
       opacity: 0;
-      transform: translateY(32px);
-      transition: opacity 0.6s ease, transform 0.6s ease;
+      transform: translateY(20px);
+      transition: opacity 0.5s ease, transform 0.5s ease;
     }
     .fade-up.visible { opacity: 1; transform: translateY(0); }
     .fade-up.delay-1 { transition-delay: 0.1s; }
@@ -72,8 +93,10 @@
       padding: 0 32px;
     }
 
-    section { padding: 120px 0; }
-    section + section { border-top: 1px solid var(--border); }
+    section { padding: 80px 0; }
+    #funnel { padding: 120px 0; }
+    .recommendation-section { padding: 120px 0; }
+    .experiment { padding: 64px 0; }
 
     /* ── Nav ── */
     nav {
@@ -103,13 +126,16 @@
       background: var(--text); color: white;
       padding: 7px 16px; border-radius: 8px; font-size: 13px;
     }
-    .nav-links .nav-cta:hover { background: var(--accent); color: white; }
+    .nav-links .nav-cta:hover { background: #333; color: white; }
+    .nav-menu-btn {
+      display: none; background: none; border: none; cursor: pointer;
+      color: var(--text); padding: 4px; line-height: 0;
+    }
 
     /* ── Section Labels ── */
     .section-label {
-      position: sticky; top: 60px; z-index: 40;
-      background: rgba(255,255,255,0.92); backdrop-filter: blur(8px);
-      padding: 10px 0; margin-bottom: 28px; display: block;
+      display: block;
+      margin-bottom: 14px;
       font-size: 11px; font-weight: 700; letter-spacing: 0.1em;
       text-transform: uppercase; color: var(--text-muted);
     }
@@ -122,7 +148,7 @@
       margin-bottom: 16px; color: var(--text);
     }
     .section-intro {
-      font-size: 18px; line-height: 1.75;
+      font-size: 18px; line-height: 1.8;
       color: var(--text-secondary); max-width: 680px; margin-bottom: 48px;
     }
 
@@ -131,7 +157,7 @@
       min-height: 100vh;
       display: flex; align-items: center;
       padding-top: 80px;
-      background: linear-gradient(160deg, #f5f3ff 0%, #f0f7ff 40%, #ffffff 100%);
+      background: var(--bg-hero);
     }
     .hero-inner {
       max-width: var(--max-wide);
@@ -139,8 +165,8 @@
     }
     .hero-label {
       display: inline-block;
-      background: rgba(99,102,241,0.1); color: var(--accent);
-      font-size: 12px; font-weight: 600; letter-spacing: 0.08em;
+      background: #ebebea; color: #555;
+      font-size: 11px; font-weight: 700; letter-spacing: 0.08em;
       text-transform: uppercase; padding: 5px 12px;
       border-radius: 100px; margin-bottom: 24px;
     }
@@ -161,7 +187,7 @@
 
     /* Hero stats as card panel */
     .hero-stats {
-      border: 1px solid var(--border); border-radius: 16px;
+      border: 1px solid var(--border); border-radius: var(--radius);
       overflow: hidden; max-width: 680px;
       box-shadow: var(--shadow); background: white;
       display: flex; flex-wrap: wrap;
@@ -184,7 +210,7 @@
 
     /* ── Problem Section ── */
     .viz-container {
-      background: #fafafa;
+      background: white;
       border: 1px solid var(--border);
       border-radius: var(--radius);
       padding: 32px;
@@ -222,7 +248,7 @@
     /* Finding box: full-bleed dark */
     .finding-box {
       width: 100vw; margin-left: calc(-50vw + 50%);
-      background: #111827; padding: 80px 32px; margin-top: 48px;
+      background: #0f0f0f; padding: 80px 32px; margin-top: 64px;
     }
     .finding-box-inner {
       max-width: var(--max-wide); margin: 0 auto;
@@ -246,33 +272,35 @@
       gap: 24px; margin-bottom: 40px;
     }
     .predictor-card {
-      background: var(--surface); border: 2px solid var(--border);
+      background: var(--surface); border: 1px solid var(--border);
       border-radius: var(--radius); padding: 28px;
       position: relative; transition: all var(--transition);
     }
     .predictor-card.significant {
-      border-color: var(--champions);
-      background: linear-gradient(135deg, #fff 0%, #f0fdf4 100%);
+      background: #fafffe;
+      border-left: 4px solid var(--champions-border);
     }
-    .predictor-card.not-significant { opacity: 0.65; }
+    .predictor-card.not-significant {
+      border: 1px solid var(--border-subtle);
+    }
     .predictor-card .badge {
       position: absolute; top: 20px; right: 20px;
       font-size: 11px; font-weight: 700;
       padding: 3px 10px; border-radius: 100px;
     }
-    .significant .badge { background: #d1fae5; color: #15803d; }
-    .not-significant .badge { background: var(--border); color: var(--text-muted); }
+    .significant .badge { background: var(--champions-bg); color: var(--champions-dark); }
+    .not-significant .badge { background: var(--border-subtle); color: var(--text-muted); }
     .predictor-card h3 {
       font-size: 16px; font-weight: 600;
       margin-bottom: 12px; color: var(--text);
     }
     .predictor-card .p-value {
       font-family: var(--serif);
-      font-size: 48px; font-weight: 600;
+      font-size: 44px; font-weight: 600;
       letter-spacing: -2px; line-height: 1;
       margin-bottom: 8px;
     }
-    .significant .p-value { color: var(--champions); }
+    .significant .p-value { color: var(--champions-dark); }
     .not-significant .p-value { color: var(--text-muted); }
     .predictor-card .p-label {
       font-size: 12px; font-weight: 600; color: var(--text-muted);
@@ -293,7 +321,7 @@
 
     .pull-stat {
       font-family: var(--serif); font-size: 22px; font-weight: 600;
-      color: var(--text); border-left: 3px solid var(--accent);
+      color: var(--text); border-left: 3px solid #d1d5db;
       padding-left: 10px; margin-left: 2px;
     }
 
@@ -316,9 +344,13 @@
     .segment-row:hover { transform: scale(1.015); box-shadow: var(--shadow-hover); }
 
     .segment-row-left {
-      flex: 0 0 260px; padding: 28px 28px 28px 36px;
+      flex: 0 0 280px; padding: 28px 28px 28px 36px;
       border-right: 1px solid var(--border);
     }
+    .champions .segment-row-left { background: var(--champions-bg); }
+    .rising    .segment-row-left { background: var(--rising-bg); }
+    .atrisk    .segment-row-left { background: var(--atrisk-bg); }
+    .dormant   .segment-row-left { background: var(--dormant-bg); }
     .segment-row-right { flex: 1; padding: 28px 32px; }
 
     .segment-header {
@@ -327,25 +359,27 @@
     .segment-name {
       font-size: 18px; font-weight: 700; letter-spacing: -0.5px;
     }
-    .segment-row.champions .segment-name { color: var(--champions); }
-    .segment-row.rising .segment-name { color: var(--rising); }
-    .segment-row.atrisk .segment-name { color: var(--atrisk); }
-    .segment-row.dormant .segment-name { color: var(--dormant); }
+    .segment-row.champions .segment-name { color: var(--champions-dark); }
+    .segment-row.rising .segment-name { color: var(--rising-dark); }
+    .segment-row.atrisk .segment-name { color: var(--atrisk-dark); }
+    .segment-row.dormant .segment-name { color: var(--dormant-dark); }
 
     .segment-icon {
-      width: 36px; height: 36px; border-radius: 50%;
-      display: flex; align-items: center; justify-content: center; font-size: 18px;
+      width: 34px; height: 34px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
     }
-    .champions .segment-icon { background: #d1fae5; }
-    .rising .segment-icon { background: #dbeafe; }
-    .atrisk .segment-icon { background: #fef3c7; }
-    .dormant .segment-icon { background: #fee2e2; }
+    .champions .segment-icon { background: #dcfce7; color: var(--champions-dark); }
+    .rising    .segment-icon { background: #dbeafe; color: var(--rising-dark); }
+    .atrisk    .segment-icon { background: #fef3c7; color: var(--atrisk-dark); }
+    .dormant   .segment-icon { background: #fee2e2; color: var(--dormant-dark); }
+    .segment-icon svg { display: block; }
 
     .segment-metrics {
       display: grid; grid-template-columns: 1fr 1fr;
       gap: 12px; margin: 0;
     }
-    .seg-metric { background: #f9fafb; border-radius: 10px; padding: 12px; }
+    .seg-metric { background: white; border-radius: var(--radius-sm); padding: 12px; }
     .seg-metric .val {
       font-size: 20px; font-weight: 700; letter-spacing: -0.8px;
       color: var(--text); margin-bottom: 2px;
@@ -375,9 +409,9 @@
     .funnel-wrap {
       border: 1px solid var(--border); border-radius: var(--radius);
       padding: 48px 32px; margin-bottom: 40px;
-      background: #fafafa; display: flex; justify-content: center;
+      background: white; display: flex; justify-content: center;
     }
-    .funnel-svg-container { width: 100%; max-width: 460px; }
+    .funnel-svg-container { width: 100%; max-width: 520px; }
 
     .funnel-caption {
       font-size: 18px; color: var(--text-secondary);
@@ -388,15 +422,16 @@
 
     /* ── Recommendation ── */
     .rec-card {
-      background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
-      border: 1px solid #bae6fd; border-radius: var(--radius);
-      padding: 36px; margin-bottom: 24px;
+      background: var(--rising-bg);
+      border-left: 4px solid var(--rising);
+      border-radius: 0 var(--radius) var(--radius) 0;
+      padding: 32px 36px; margin-bottom: 24px;
     }
     .rec-card h3 {
-      font-size: 22px; font-weight: 700; letter-spacing: -0.5px;
-      color: var(--text); margin-bottom: 16px;
+      font-size: 20px; font-weight: 700; letter-spacing: -0.3px;
+      color: var(--text); margin-bottom: 14px;
     }
-    .rec-card p { font-size: 16px; color: var(--text-secondary); line-height: 1.7; }
+    .rec-card p { font-size: 15px; color: var(--text-secondary); line-height: 1.75; }
     .rec-card p + p { margin-top: 12px; }
     .rec-card strong { color: var(--text); }
 
@@ -409,20 +444,24 @@
       text-transform: uppercase; color: var(--text-muted); margin-bottom: 10px;
     }
     .alert-example-text {
-      font-size: 14px; color: var(--text); line-height: 1.6; font-style: italic;
+      font-family: 'JetBrains Mono', 'Courier New', monospace;
+      font-size: 12.5px; color: var(--text); line-height: 1.65; font-style: italic;
     }
-    .alert-example-text span { color: var(--rising); font-weight: 600; font-style: normal; }
+    .alert-example-text span { color: var(--rising-dark); font-weight: 600; font-style: normal; }
 
     .rec-priorities { display: flex; flex-direction: column; gap: 16px; }
     .priority-item {
       display: flex; gap: 16px; align-items: flex-start;
-      background: #f9fafb; border-radius: 12px; padding: 20px;
+      background: var(--bg-surface); border-radius: var(--radius); padding: 20px;
     }
     .priority-num {
-      width: 32px; height: 32px; background: var(--text); color: white;
+      width: 30px; height: 30px; color: white;
       border-radius: 50%; display: flex; align-items: center; justify-content: center;
-      font-size: 14px; font-weight: 700; flex-shrink: 0;
+      font-size: 13px; font-weight: 700; flex-shrink: 0;
     }
+    .priority-item:nth-child(1) .priority-num { background: var(--rising); }
+    .priority-item:nth-child(2) .priority-num { background: var(--champions); }
+    .priority-item:nth-child(3) .priority-num { background: var(--dormant); }
     .priority-content h4 {
       font-size: 15px; font-weight: 600; color: var(--text); margin-bottom: 4px;
     }
@@ -431,56 +470,60 @@
     }
 
     /* ── Experiment ── */
+    .table-scroll { overflow-x: auto; -webkit-overflow-scrolling: touch; border-radius: var(--radius); box-shadow: var(--shadow); margin-bottom: 24px; }
     .experiment-table {
-      width: 100%; border-collapse: collapse; font-size: 14px;
+      width: 100%; border-collapse: collapse; font-size: 15px;
       background: var(--surface); border-radius: var(--radius);
-      overflow: hidden; box-shadow: var(--shadow); margin-bottom: 24px;
+      overflow: hidden;
     }
     .experiment-table th {
-      background: var(--text); color: white;
-      font-size: 12px; font-weight: 600;
+      background: #1e293b; color: rgba(255,255,255,0.9);
+      font-size: 11px; font-weight: 500;
       text-transform: uppercase; letter-spacing: 0.06em;
-      padding: 14px 20px; text-align: left;
+      padding: 13px 20px; text-align: left;
     }
     .experiment-table td {
-      padding: 14px 20px; border-bottom: 1px solid var(--border);
+      padding: 16px 20px; border-bottom: 1px solid var(--border);
       color: var(--text-secondary);
     }
+    .experiment-table tbody tr:nth-child(even) td { background: var(--border-subtle); }
     .experiment-table tr:last-child td { border-bottom: none; }
     .experiment-table td:first-child { font-weight: 500; color: var(--text); }
-    .experiment-table tbody tr:hover td { background: #f9fafb; }
+    .experiment-table tbody tr:hover td { background: #f0f0ef; }
 
-    .experiment-table .warning td { background: #fff5f5; }
+    .experiment-table .warning td { background: var(--dormant-bg); }
     .experiment-table .warning td:first-child { border-left: 4px solid var(--dormant); }
-    .experiment-table .warning td:last-child { color: var(--dormant); font-weight: 600; }
-    .experiment-table .warning:hover td { background: #fee2e2; }
+    .experiment-table .warning td:last-child { color: var(--dormant-dark); font-weight: 600; }
+    .experiment-table .warning:hover td { background: #fecaca40; }
 
-    .experiment-table .success td:last-child { color: var(--champions); font-weight: 600; }
+    .experiment-table .success td:last-child { color: var(--champions-dark); font-weight: 600; }
     .experiment-table .success td:first-child { border-left: 4px solid var(--champions); }
 
-    /* Guardrail: full-bleed dark box */
+    /* Guardrail: left-border callout card */
     .guardrail-fullbleed {
-      width: 100vw; margin-left: calc(-50vw + 50%);
-      background: #111827; padding: 72px 32px; margin-top: 32px;
+      max-width: var(--max-prose);
+      border-left: 4px solid var(--dormant);
+      background: var(--dormant-bg);
+      border-radius: 0 var(--radius) var(--radius) 0;
+      padding: 32px 36px; margin-top: 32px;
     }
     .guardrail-inner {
-      max-width: var(--max-wide); margin: 0 auto;
-      display: grid; grid-template-columns: 200px 1fr;
-      gap: 56px; align-items: start;
+      display: grid; grid-template-columns: auto 1fr;
+      gap: 32px; align-items: start;
     }
     .guardrail-number {
-      font-family: var(--serif); font-size: 96px; font-weight: 600;
-      color: var(--dormant); letter-spacing: -4px; line-height: 1;
+      font-family: var(--serif); font-size: 64px; font-weight: 600;
+      color: var(--dormant); letter-spacing: -3px; line-height: 1;
     }
     .guardrail-content h3 {
-      font-family: var(--serif); font-size: 24px; font-weight: 600;
-      color: white; margin-bottom: 16px;
+      font-family: var(--serif); font-size: 20px; font-weight: 600;
+      color: var(--text); margin-bottom: 12px;
     }
     .guardrail-content p {
-      font-size: 16px; color: rgba(255,255,255,0.7);
-      line-height: 1.75; margin-bottom: 14px;
+      font-size: 15px; color: var(--text-secondary);
+      line-height: 1.75; margin-bottom: 12px;
     }
-    .guardrail-content strong { color: rgba(255,255,255,0.9); }
+    .guardrail-content strong { color: var(--text); }
 
     /* ── Footer ── */
     footer {
@@ -507,25 +550,54 @@
       padding: 7px 16px; border-radius: 8px;
       font-weight: 600; font-size: 13px;
     }
-    .footer-links .footer-cta:hover { background: var(--accent); color: white; }
+    .footer-links .footer-cta:hover { background: #333; color: white; }
     .footer-bottom {
       border-top: 1px solid var(--border); padding-top: 16px;
       font-size: 11px; color: var(--text-muted);
     }
 
     /* ── Responsive ── */
-    @media (max-width: 768px) {
-      section { padding: 72px 0; }
+    @media (max-width: 640px) {
+      section { padding: 64px 0; }
+      #funnel { padding: 80px 0; }
+      .recommendation-section { padding: 80px 0; }
+      .experiment { padding: 48px 0; }
+      .container { padding: 0 20px; }
       .segment-row { flex-direction: column; }
       .segment-row-left { flex: none; border-right: none; border-bottom: 1px solid var(--border); }
-      .guardrail-inner { grid-template-columns: 1fr; gap: 24px; }
+      .champions .segment-row-left,
+      .rising    .segment-row-left,
+      .atrisk    .segment-row-left,
+      .dormant   .segment-row-left { border-radius: 0; }
+      .guardrail-inner { grid-template-columns: 1fr; gap: 16px; }
+      .guardrail-number { font-size: 48px; }
       .finding-box-inner { grid-template-columns: 1fr; gap: 24px; }
-      .hero-stats { flex-direction: column; }
+      .hero-stats { display: grid; grid-template-columns: 1fr 1fr; }
       .hero-stat { border-right: none; border-bottom: 1px solid var(--border); }
-      .hero-stat:last-child { border-bottom: none; }
+      .hero-stat:nth-child(odd) { border-right: 1px solid var(--border); }
+      .hero-stat:nth-child(3),
+      .hero-stat:nth-child(4) { border-bottom: none; }
       .predictor-grid { grid-template-columns: 1fr; }
-      nav .nav-links { gap: 12px; }
-      nav .nav-links a:not(.nav-cta) { display: none; }
+      .nav-menu-btn { display: flex; }
+      nav .nav-links {
+        display: none; position: absolute; top: 100%; left: 0; right: 0;
+        flex-direction: column; gap: 0;
+        background: white; border-bottom: 1px solid var(--border);
+        padding: 8px 0;
+      }
+      nav .nav-links a {
+        display: block; padding: 12px 24px;
+        border-radius: 0; font-size: 15px;
+      }
+      nav .nav-links .nav-cta {
+        margin: 8px 24px 4px; border-radius: 8px; text-align: center;
+      }
+      nav.menu-open .nav-links { display: flex; }
+    }
+    @media (max-width: 400px) {
+      section { padding: 52px 0; }
+      .finding-box { padding: 56px 20px; }
+      .finding-number { font-size: 72px; letter-spacing: -3px; }
     }
   </style>
 </head>
@@ -535,6 +607,9 @@
   <!-- NAV -->
   <nav>
     <a href="index.html" class="nav-brand">Merchant Growth Intelligence</a>
+    <button class="nav-menu-btn" aria-label="Open menu" aria-expanded="false">
+      <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M2 4h14M2 9h14M2 14h14" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+    </button>
     <div class="nav-links">
       <a href="#segments">Segments</a>
       <a href="#recommendation">Recommendation</a>
@@ -581,23 +656,23 @@
         <div class="viz-title">
           <span>Merchants with average review score above 4.0</span>
           <div class="viz-toggle">
-            <button class="viz-btn active" id="btn-naive" onclick="showNaive()">Naive view</button>
-            <button class="viz-btn" id="btn-real" onclick="showReal()">Reality</button>
+            <button class="viz-btn active" id="btn-naive" onclick="showNaive()">Review score view</button>
+            <button class="viz-btn" id="btn-real" onclick="showReal()">Business trajectory</button>
           </div>
         </div>
         <canvas id="dotCanvas" height="200"></canvas>
         <div class="viz-legend" id="viz-legend-naive">
-          <div class="legend-item"><div class="legend-dot" style="background:#3498db"></div><span>High-rated merchants (review score 4.0+)</span></div>
+          <div class="legend-item"><div class="legend-dot" style="background:#2563eb"></div><span>High-rated merchants (review score 4.0+)</span></div>
         </div>
         <div class="viz-legend" id="viz-legend-real" style="display:none">
-          <div class="legend-item"><div class="legend-dot" style="background:#3498db"></div><span>Growing or stable (75.8%)</span></div>
-          <div class="legend-item"><div class="legend-dot" style="background:#e74c3c"></div><span>Declining order volume (24.2%)</span></div>
+          <div class="legend-item"><div class="legend-dot" style="background:#2563eb"></div><span>Growing or stable (75.8%)</span></div>
+          <div class="legend-item"><div class="legend-dot" style="background:#dc2626"></div><span>Declining order volume (24.2%)</span></div>
         </div>
       </div>
 
       <div class="finding-box fade-up">
         <div class="finding-box-inner">
-          <div class="finding-number" id="finding-counter">24.2%</div>
+          <div class="finding-number" id="finding-counter" data-count="24.2" data-suffix="%" data-decimals="1">24.2%</div>
           <div class="finding-text">
             <p>of merchants with review scores above 4.0 have <strong style="color:white">declining order volume</strong>. Their reviews look fine. Their businesses are quietly shrinking.</p>
             <p class="caveat">Based on 641 merchants with enough order history to compute a trajectory (first half vs. second half of the dataset). One limitation: this uses order volume, not true churn, since the dataset does not record account deactivations.</p>
@@ -660,7 +735,11 @@
         <div class="segment-row champions fade-up delay-1">
           <div class="segment-row-left">
             <div class="segment-header">
-              <div class="segment-icon">&#127942;</div>
+              <div class="segment-icon">
+                <svg width="16" height="18" viewBox="0 0 16 18" fill="none" aria-hidden="true">
+                  <path d="M8 1L1 4V9C1 12.87 4.08 16.49 8 17C11.92 16.49 15 12.87 15 9V4L8 1Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>
+                </svg>
+              </div>
               <span class="segment-name">Champions</span>
             </div>
             <div class="segment-metrics">
@@ -693,7 +772,11 @@
         <div class="segment-row rising fade-up delay-2">
           <div class="segment-row-left">
             <div class="segment-header">
-              <div class="segment-icon">&#11088;</div>
+              <div class="segment-icon">
+                <svg width="14" height="18" viewBox="0 0 14 18" fill="none" aria-hidden="true">
+                  <path d="M7 16V2M7 2L1 8M7 2L13 8" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </div>
               <span class="segment-name">Rising Stars</span>
             </div>
             <div class="segment-metrics">
@@ -726,7 +809,13 @@
         <div class="segment-row atrisk fade-up delay-3">
           <div class="segment-row-left">
             <div class="segment-header">
-              <div class="segment-icon">&#9888;&#65039;</div>
+              <div class="segment-icon">
+                <svg width="17" height="16" viewBox="0 0 17 16" fill="none" aria-hidden="true">
+                  <path d="M8.5 1L1 14.5H16L8.5 1Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>
+                  <path d="M8.5 6.5V9.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+                  <circle cx="8.5" cy="12" r="0.9" fill="currentColor"/>
+                </svg>
+              </div>
               <span class="segment-name">At Risk</span>
             </div>
             <div class="segment-metrics">
@@ -759,7 +848,11 @@
         <div class="segment-row dormant fade-up delay-4">
           <div class="segment-row-left">
             <div class="segment-header">
-              <div class="segment-icon">&#128564;</div>
+              <div class="segment-icon">
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+                  <path d="M13.5 9.5C12.4 10.36 11.02 10.88 9.5 10.88C5.91 10.88 3 7.97 3 4.38C3 3.2 3.32 2.1 3.87 1.17C2.07 2.3 0.88 4.3 0.88 6.6C0.88 10.19 3.79 13.1 7.38 13.1C9.98 13.1 12.24 11.64 13.5 9.5Z" fill="currentColor"/>
+                </svg>
+              </div>
               <span class="segment-name">Dormant</span>
             </div>
             <div class="segment-metrics">
@@ -799,55 +892,64 @@
       <h2 class="fade-up">A leaky funnel.</h2>
       <p class="section-intro fade-up">These four segments describe stages in a merchant lifecycle, one that has clear leakage points the platform can address.</p>
 
-      <div class="funnel-wrap fade-up">
+      <div class="funnel-wrap">
         <div class="funnel-svg-container">
-          <svg viewBox="0 0 460 400" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:460px;display:block;margin:0 auto;" aria-label="Vertical merchant lifecycle funnel">
+          <!-- Proportional widths: Rising Stars(999)=widest, At Risk(748)=74.9%, Champions(645)=64.6% -->
+          <svg viewBox="0 0 480 380" xmlns="http://www.w3.org/2000/svg" style="width:100%;display:block;margin:0 auto;" aria-label="Merchant lifecycle funnel: At Risk to Rising Stars to Champions, with Dormant branch showing stalling merchants">
             <defs>
               <marker id="arr-down" markerWidth="8" markerHeight="8" refX="4" refY="6" orient="auto">
                 <path d="M2,0 L2,6 L7,3 Z" fill="#d1d5db"/>
               </marker>
               <marker id="arr-red" markerWidth="8" markerHeight="8" refX="4" refY="6" orient="auto">
-                <path d="M2,0 L2,6 L7,3 Z" fill="#e74c3c"/>
+                <path d="M2,0 L2,6 L7,3 Z" fill="#dc2626"/>
               </marker>
             </defs>
 
-            <!-- At Risk (top, widest) -->
-            <polygon points="20,10 400,10 370,90 50,90" fill="#fff7ed" stroke="#f39c12" stroke-width="1.5"/>
-            <text x="210" y="38" text-anchor="middle" font-family="Inter,sans-serif" font-size="13" font-weight="700" fill="#92400e">At Risk</text>
-            <text x="210" y="62" text-anchor="middle" font-family="Inter,sans-serif" font-size="26" font-weight="800" fill="#f39c12">748</text>
-            <text x="210" y="80" text-anchor="middle" font-family="Inter,sans-serif" font-size="11" fill="#b45309">2 median orders · 4.67 avg review</text>
+            <!-- At Risk (748 merchants = 74.9% of Rising Stars width) -->
+            <g id="funnel-at-risk" style="opacity:0;transform:translateY(8px);transition:opacity 0.4s ease,transform 0.4s ease">
+              <polygon points="83,10 337,10 322,88 98,88" fill="#fffbeb" stroke="#d97706" stroke-width="1.5"/>
+              <text x="210" y="36" text-anchor="middle" font-family="Inter,sans-serif" font-size="12" font-weight="700" fill="#92400e">At Risk</text>
+              <text x="210" y="60" text-anchor="middle" font-family="Inter,sans-serif" font-size="24" font-weight="800" fill="#d97706">748</text>
+              <text x="210" y="79" text-anchor="middle" font-family="Inter,sans-serif" font-size="10" fill="#b45309">2 median orders · 4.67 avg review</text>
+            </g>
 
             <!-- Connector 1 -->
-            <line x1="210" y1="90" x2="210" y2="130" stroke="#d1d5db" stroke-width="1.5" marker-end="url(#arr-down)"/>
+            <g id="funnel-arrow1" style="opacity:0;transition:opacity 0.25s ease">
+              <line x1="210" y1="88" x2="210" y2="128" stroke="#d1d5db" stroke-width="1.5" marker-end="url(#arr-down)"/>
+            </g>
 
-            <!-- Rising Stars -->
-            <polygon points="50,130 370,130 340,210 80,210" fill="#eff6ff" stroke="#3498db" stroke-width="1.5"/>
-            <text x="210" y="157" text-anchor="middle" font-family="Inter,sans-serif" font-size="13" font-weight="700" fill="#1e40af">Rising Stars</text>
-            <text x="210" y="181" text-anchor="middle" font-family="Inter,sans-serif" font-size="26" font-weight="800" fill="#3498db">999</text>
-            <text x="210" y="200" text-anchor="middle" font-family="Inter,sans-serif" font-size="11" fill="#1e40af">10 median orders · 29.3% declining</text>
+            <!-- Rising Stars (999 merchants = widest, 340px top) -->
+            <g id="funnel-rising" style="opacity:0;transform:translateY(8px);transition:opacity 0.4s ease,transform 0.4s ease">
+              <polygon points="40,130 380,130 365,208 55,208" fill="#eff6ff" stroke="#2563eb" stroke-width="1.5"/>
+              <text x="210" y="156" text-anchor="middle" font-family="Inter,sans-serif" font-size="12" font-weight="700" fill="#1e40af">Rising Stars</text>
+              <text x="210" y="180" text-anchor="middle" font-family="Inter,sans-serif" font-size="24" font-weight="800" fill="#2563eb">999</text>
+              <text x="210" y="199" text-anchor="middle" font-family="Inter,sans-serif" font-size="10" fill="#1e40af">10 median orders · 29.3% declining</text>
+            </g>
 
-            <!-- Leak arrow to Dormant -->
-            <path d="M 340 170 C 390 170 400 210 400 240" stroke="#e74c3c" stroke-width="1.5" stroke-dasharray="4,3" fill="none" marker-end="url(#arr-red)"/>
-            <text x="360" y="208" text-anchor="start" font-family="Inter,sans-serif" font-size="10" font-weight="600" fill="#e74c3c">29.3% stalling</text>
-
-            <!-- Dormant box (right) -->
-            <rect x="348" y="240" width="108" height="72" rx="8" fill="#fef2f2" stroke="#e74c3c" stroke-width="1.5"/>
-            <text x="402" y="261" text-anchor="middle" font-family="Inter,sans-serif" font-size="11" font-weight="700" fill="#991b1b">Dormant</text>
-            <text x="402" y="283" text-anchor="middle" font-family="Inter,sans-serif" font-size="20" font-weight="800" fill="#e74c3c">568</text>
-            <text x="402" y="302" text-anchor="middle" font-family="Inter,sans-serif" font-size="9" fill="#dc2626">52.8% were declining</text>
+            <!-- Dormant branch: L-shaped dashed arrow + box -->
+            <g id="funnel-dormant-branch" style="opacity:0;transition:opacity 0.35s ease">
+              <path d="M 372 169 L 436 169 L 436 260" stroke="#dc2626" stroke-width="1.5" stroke-dasharray="4,3" fill="none" marker-end="url(#arr-red)"/>
+              <text x="404" y="161" text-anchor="middle" font-family="Inter,sans-serif" font-size="10" font-weight="600" fill="#dc2626">29.3% stalling</text>
+              <rect x="394" y="262" width="80" height="74" rx="8" fill="#fef2f2" stroke="#dc2626" stroke-width="1.5"/>
+              <text x="434" y="284" text-anchor="middle" font-family="Inter,sans-serif" font-size="11" font-weight="700" fill="#991b1b">Dormant</text>
+              <text x="434" y="306" text-anchor="middle" font-family="Inter,sans-serif" font-size="20" font-weight="800" fill="#dc2626">568</text>
+              <text x="434" y="326" text-anchor="middle" font-family="Inter,sans-serif" font-size="9" fill="#dc2626">52.8% were declining</text>
+            </g>
 
             <!-- Connector 2 -->
-            <line x1="210" y1="210" x2="210" y2="250" stroke="#d1d5db" stroke-width="1.5" marker-end="url(#arr-down)"/>
+            <g id="funnel-arrow2" style="opacity:0;transition:opacity 0.25s ease">
+              <line x1="210" y1="208" x2="210" y2="248" stroke="#d1d5db" stroke-width="1.5" marker-end="url(#arr-down)"/>
+            </g>
 
-            <!-- Champions (narrowest, highlighted) -->
-            <polygon points="80,250 340,250 310,330 110,330" fill="#f0fdf4" stroke="#2ecc71" stroke-width="2"/>
-            <text x="210" y="277" text-anchor="middle" font-family="Inter,sans-serif" font-size="13" font-weight="700" fill="#166534">Champions</text>
-            <text x="210" y="301" text-anchor="middle" font-family="Inter,sans-serif" font-size="26" font-weight="800" fill="#2ecc71">645</text>
-            <text x="210" y="320" text-anchor="middle" font-family="Inter,sans-serif" font-size="11" fill="#166534">65 median orders · 80.9% of GMV</text>
-
-            <!-- Goal label -->
-            <rect x="148" y="344" width="124" height="26" rx="13" fill="#166534"/>
-            <text x="210" y="362" text-anchor="middle" font-family="Inter,sans-serif" font-size="11" font-weight="700" fill="white">&#10003; Platform goal</text>
+            <!-- Champions (645 merchants = 64.6% of Rising Stars width) -->
+            <g id="funnel-champions" style="opacity:0;transform:translateY(8px);transition:opacity 0.4s ease,transform 0.4s ease">
+              <polygon points="100,250 320,250 305,328 115,328" fill="#f0fdf4" stroke="#16a34a" stroke-width="2"/>
+              <text x="210" y="275" text-anchor="middle" font-family="Inter,sans-serif" font-size="12" font-weight="700" fill="#166534">Champions</text>
+              <text x="210" y="299" text-anchor="middle" font-family="Inter,sans-serif" font-size="24" font-weight="800" fill="#16a34a">645</text>
+              <text x="210" y="318" text-anchor="middle" font-family="Inter,sans-serif" font-size="10" fill="#166534">65 median orders · 80.9% of GMV</text>
+              <rect x="148" y="342" width="124" height="26" rx="13" fill="#166534"/>
+              <text x="210" y="360" text-anchor="middle" font-family="Inter,sans-serif" font-size="11" font-weight="700" fill="white">&#10003; Platform goal</text>
+            </g>
           </svg>
         </div>
       </div>
@@ -911,7 +1013,7 @@
       <h2 class="fade-up">How to test it.</h2>
       <p class="section-intro fade-up">Before shipping the feature, I designed a randomized experiment using variance from the actual Olist data. The power analysis surfaced something important about how the guardrail metric should be measured.</p>
 
-      <table class="experiment-table fade-up">
+      <div class="table-scroll fade-up"><table class="experiment-table">
         <thead>
           <tr>
             <th>Parameter</th>
@@ -961,7 +1063,7 @@
             <td>~3,812 orders/month from eligible sellers. Resolves in under 4 weeks.</td>
           </tr>
         </tbody>
-      </table>
+      </table></div>
 
       <div class="guardrail-fullbleed fade-up">
         <div class="guardrail-inner">
@@ -1038,7 +1140,8 @@
     // ── Dot matrix visualization
     const canvas = document.getElementById('dotCanvas');
     const ctx = canvas.getContext('2d');
-    const TOTAL = 100, DECLINING = 24, COLS = 20, ROWS = 5, DOT_R = 10, GAP = 10;
+    const TOTAL = 100, DECLINING = 24, COLS = 20, ROWS = 5, DOT_R = 7, GAP = 14;
+    const COLOR_NAIVE = '#2563eb', COLOR_DECLINE = '#dc2626';
     let dots = [], phase = 'naive', animFrame = null, pulseRaf = null, pulseT = 0;
 
     function initCanvas() {
@@ -1052,7 +1155,7 @@
       dots = [];
       for (let i = 0; i < TOTAL; i++) {
         dots.push({ x: sx/2 + (i%COLS)*sx, y: sy/2 + 12 + Math.floor(i/COLS)*sy,
-          isDecline: i < DECLINING, color: '#3498db', targetColor: i < DECLINING ? '#e74c3c' : '#3498db' });
+          isDecline: i < DECLINING, color: COLOR_NAIVE, targetColor: i < DECLINING ? COLOR_DECLINE : COLOR_NAIVE });
       }
       for (let i = dots.length-1; i > 0; i--) {
         const j = Math.floor(Math.random()*(i+1)); [dots[i],dots[j]] = [dots[j],dots[i]];
@@ -1070,7 +1173,7 @@
       ctx.clearRect(0,0,w,h);
       dots.forEach(d => {
         let r = DOT_R;
-        if (d.isDecline && phase==='real') r = DOT_R*(1+0.15*Math.sin(pulseT*Math.PI*2));
+        if (d.isDecline && phase==='real') r = DOT_R*(1+0.10*Math.sin(pulseT*Math.PI*(2/3.0)));
         ctx.beginPath(); ctx.arc(d.x,d.y,r,0,Math.PI*2);
         ctx.fillStyle = d.color; ctx.fill();
       });
@@ -1090,7 +1193,7 @@
       function step(ts) {
         if(!t0) t0=ts;
         const p = Math.min((ts-t0)/900,1), e=1-Math.pow(1-p,3);
-        dots.forEach(d => { if(d.isDecline) d.color=lerpColor('#3498db',d.targetColor,e); });
+        dots.forEach(d => { if(d.isDecline) d.color=lerpColor(COLOR_NAIVE,d.targetColor,e); });
         drawDots();
         if(p<1) animFrame=requestAnimationFrame(step); else { animFrame=null; startPulse(); }
       }
@@ -1101,8 +1204,8 @@
       let t0=null;
       function step(ts) {
         if(!t0) t0=ts;
-        const p=Math.min((ts-t0)/600,1),e=1-Math.pow(1-p,3);
-        dots.forEach(d => { if(d.isDecline) d.color=lerpColor(d.targetColor,'#3498db',e); });
+        const p=Math.min((ts-t0)/500,1),e=1-Math.pow(1-p,3);
+        dots.forEach(d => { if(d.isDecline) d.color=lerpColor(d.targetColor,COLOR_NAIVE,e); });
         drawDots();
         if(p<1) animFrame=requestAnimationFrame(step); else animFrame=null;
       }
@@ -1138,6 +1241,65 @@
       if(phase==='real') { dots.forEach(d=>{if(d.isDecline)d.color=d.targetColor;}); drawDots(); if(!pulseRaf)startPulse(); }
       else drawDots();
     });
+
+    // ── Finding number counter
+    const findingEl = document.getElementById('finding-counter');
+    let findingAnimated = false;
+    if (findingEl) {
+      new IntersectionObserver((entries) => {
+        if (entries[0].isIntersecting && !findingAnimated) {
+          findingAnimated = true;
+          animateCounter(findingEl);
+        }
+      }, { threshold: 0.3 }).observe(findingEl);
+    }
+
+    // ── Funnel sequential animation
+    const funnelSection = document.getElementById('funnel');
+    let funnelAnimated = false;
+    if (funnelSection) {
+      new IntersectionObserver((entries) => {
+        if (entries[0].isIntersecting && !funnelAnimated) {
+          funnelAnimated = true;
+          const steps = [
+            { id: 'funnel-at-risk',        delay: 0 },
+            { id: 'funnel-arrow1',         delay: 400 },
+            { id: 'funnel-rising',         delay: 600 },
+            { id: 'funnel-dormant-branch', delay: 900 },
+            { id: 'funnel-arrow2',         delay: 1000 },
+            { id: 'funnel-champions',      delay: 1200 },
+          ];
+          steps.forEach(({ id, delay }) => {
+            setTimeout(() => {
+              const el = document.getElementById(id);
+              if (el) { el.style.opacity = '1'; el.style.transform = 'translateY(0)'; }
+            }, delay);
+          });
+        }
+      }, { threshold: 0.25 }).observe(funnelSection);
+    }
+
+    // ── Hamburger nav
+    const navMenuBtn = document.querySelector('.nav-menu-btn');
+    const mainNav = document.querySelector('nav');
+    if (navMenuBtn) {
+      navMenuBtn.addEventListener('click', () => {
+        mainNav.classList.toggle('menu-open');
+        const isOpen = mainNav.classList.contains('menu-open');
+        navMenuBtn.setAttribute('aria-expanded', isOpen);
+        navMenuBtn.innerHTML = isOpen
+          ? '<svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M2 2L16 16M16 2L2 16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>'
+          : '<svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M2 4h14M2 9h14M2 14h14" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>';
+      });
+      // Close menu on link click
+      mainNav.querySelectorAll('.nav-links a').forEach(a => {
+        a.addEventListener('click', () => {
+          mainNav.classList.remove('menu-open');
+          navMenuBtn.setAttribute('aria-expanded', false);
+          navMenuBtn.innerHTML = '<svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M2 4h14M2 9h14M2 14h14" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>';
+        });
+      });
+    }
   </script>
 </body>
 </html>
